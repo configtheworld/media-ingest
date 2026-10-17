@@ -1,0 +1,23 @@
+# Spanish naming: "Temporada 1 Capítulo 3", "Cap.103" (= 1x03), "T01E03",
+# "Capítulo 3", "Episodio 3". Patterns use the common subset of RE2 and
+# JavaScript regular expressions and are matched case-insensitively.
+name: Español
+description: Temporada / Capítulo
+episode:
+  - name: Temporada 1 Capítulo 3
+    pattern: 'temporada[ ._-]*(?<season>\d{1,3})[ ._-]*(?:-[ ._-]*)?(?:cap[ií]tulo|episodio|cap\.?)[ ._-]*(?<episode>\d{1,4})'
+  - name: T01E03
+    pattern: '(?:^|[^a-z0-9])t(?<season>\d{1,2})[ ._-]?e(?<episode>\d{1,4})(?:[^0-9]|$)'
+  - name: Cap.103
+    pattern: '(?:^|[^a-z0-9])cap[ ._]?(?<season>\d{1,2})(?<episode>\d{2})(?:[^0-9]|$)'
+  - name: Capítulo 3
+    pattern: '(?:^|[^a-z0-9])(?:cap[ií]tulo|episodio)[ ._-]*(?<episode>\d{1,4})(?:[^0-9]|$)'
+  - name: Cap 3
+    pattern: '(?:^|[^a-z0-9])cap\.?[ ._-]?(?<episode>\d{1,2})(?:[^0-9]|$)'
+season:
+  - name: Temporada 1
+    pattern: '(?:^|[^a-z0-9])temporada[ ._-]*(?<season>\d{1,3})(?:[^0-9]|$)'
+  - name: Especiales
+    pattern: '^(?<specials>especiales?)$'
+junk:
+  - '(?:^|[^a-z0-9])(?:castellano|latino|espa[nñ]ol|spanish|subtitulado|vose|vos|dual|esp|lat)(?:[^a-z0-9]|$)'

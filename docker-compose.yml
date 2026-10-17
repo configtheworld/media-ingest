@@ -1,0 +1,26 @@
+services:
+  media-ingest:
+    build:
+      context: .
+      args:
+        VERSION: ${VERSION:-}
+    image: media-ingest:local
+    container_name: media-ingest
+    # Runs as the owner of your media files. On Linux create the data folder
+    # first and give it to that user: mkdir -p data && chown 1000:1000 data
+    user: "${PUID:-1000}:${PGID:-1000}"
+    env_file: .env
+    ports:
+      # Set PUBLISH=127.0.0.1:8097 in .env to expose the app on this machine only.
+      - "${PUBLISH:-8097}:8097"
+    volumes:
+      # One volume holding the libraries AND the staging dir (<MEDIA_ROOT>/.incoming),
+      # so publishing is an atomic rename on the same file system.
+      # On Docker Desktop (macOS/Windows) the host path must be a shared folder.
+      - ${MEDIA_PATH:-./media}:/media
+      - ${DATA_PATH:-./data}:/data
+    read_only: true
+    cap_drop: [ALL]
+    security_opt:
+      - no-new-privileges:true
+    restart: unless-stopped

@@ -1,0 +1,14 @@
+# local configuration and data (never commit)
+.env
+!.env.example
+data/
+media/
+local/
+
+# build and test output
+/media-ingest
+/dist/
+node_modules/
+e2e/.tmp/
+test-results/
+playwright-report/

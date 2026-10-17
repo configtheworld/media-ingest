@@ -1,0 +1,14 @@
+{
+  "name": "media-ingest-dev",
+  "private": true,
+  "description": "Development tooling only (tests). The app itself has no npm dependencies.",
+  "type": "module",
+  "scripts": {
+    "lint:js": "for f in web/static/js/*.js; do node --check \"$f\" || exit 1; done",
+    "test:unit": "node --test 'web/test/*.test.mjs'",
+    "test:e2e": "playwright test"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.63.0"
+  }
+}

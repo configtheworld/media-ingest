@@ -1,0 +1,25 @@
+# German naming: "Staffel 1 Folge 3", "Folge 3", "3. Folge", "Teil 2".
+# Patterns use the common subset of RE2 and JavaScript regular expressions and
+# are matched case-insensitively.
+name: Deutsch
+description: Staffel / Folge
+episode:
+  - name: Staffel 1 Folge 3
+    pattern: 'staffel[ ._-]*(?<season>\d{1,3})[ ._-]*(?:-[ ._-]*)?(?:folge|episode|teil)[ ._-]*(?<episode>\d{1,4})'
+  - name: 1. Staffel 3. Folge
+    pattern: '(?<season>\d{1,3})\.[ ._]?staffel[ ._-]*(?<episode>\d{1,4})\.[ ._]?folge'
+  - name: 3. Folge
+    pattern: '(?:^|[^0-9])(?<episode>\d{1,4})\.[ ._]?folge'
+  - name: Folge 3
+    pattern: '(?:^|[^a-z0-9])(?:folge|fg)[ ._-]?(?<episode>\d{1,4})(?:[^0-9]|$)'
+  - name: Teil 2
+    pattern: '(?:^|[^a-z0-9])teil[ ._-]?(?<episode>\d{1,4})(?:[^0-9]|$)'
+season:
+  - name: Staffel 1
+    pattern: '(?:^|[^a-z0-9])staffel[ ._-]*(?<season>\d{1,3})(?:[^0-9]|$)'
+  - name: 1. Staffel
+    pattern: '(?:^|[^0-9])(?<season>\d{1,3})\.[ ._]?staffel'
+  - name: Specials
+    pattern: '^(?<specials>spezial|specials?|sonderfolgen?)$'
+junk:
+  - '(?:^|[^a-z0-9])(?:german|deutsch|ger|dl|ac3d|dubbed|synced|ml)(?:[^a-z0-9]|$)'

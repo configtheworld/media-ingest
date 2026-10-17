@@ -1,0 +1,24 @@
+# Turkish naming: "1. Sezon 3. Bölüm", "Sezon 1 Bölüm 3", "3.Bölüm", "Bolum 3".
+# Patterns use the common subset of RE2 and JavaScript regular expressions and
+# are matched case-insensitively. Write Turkish letters as classes ([oö], [iıİ])
+# because case folding of İ/ı differs between engines.
+name: Türkçe
+description: Sezon / Bölüm
+episode:
+  - name: 1. Sezon 3. Bölüm
+    pattern: '(?<season>\d{1,2})\s*\.?\s*sezon[ ._-]*(?<episode>\d{1,4})\s*\.?\s*b[oö]l[uü]m'
+  - name: Sezon 1 Bölüm 3
+    pattern: 'sezon[ ._-]*(?<season>\d{1,2})[ ._-]*b[oö]l[uü]m[ ._-]*(?<episode>\d{1,4})(?:[^0-9]|$)'
+  - name: 3. Bölüm
+    pattern: '(?:^|[^0-9])(?<episode>\d{1,4})\s*\.?\s*b[oö]l[uü]m'
+  - name: Bölüm 3
+    pattern: 'b[oö]l[uü]m[ ._-]*(?<episode>\d{1,4})(?:[^0-9]|$)'
+season:
+  - name: 1. Sezon
+    pattern: '(?:^|[^0-9])(?<season>\d{1,2})\s*\.?\s*sezon'
+  - name: Sezon 1
+    pattern: 'sezon[ ._-]*(?<season>\d{1,2})(?:[^0-9]|$)'
+  - name: Özel bölümler
+    pattern: '^(?<specials>[oö]zel b[oö]l[uü]mler)$'
+junk:
+  - '(?:^|[^a-z0-9])(?:t[uü]rk[cç]e|dublaj|altyaz[iıİ]l[iıİ]|altyaz[iıİ]|full|hd|[iıİ]zle|tr)(?:[^a-z0-9]|$)'
