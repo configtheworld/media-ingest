@@ -1,7 +1,7 @@
 # syntax=docker/dockerfile:1
 # Multi-arch build: docker buildx build --platform linux/amd64,linux/arm64 .
 # The builder runs natively and cross-compiles (pure Go, no cgo), so no QEMU is needed.
-FROM --platform=$BUILDPLATFORM golang:1.26.9-alpine AS build
+FROM --platform=$BUILDPLATFORM golang:1.27.2-alpine AS build
 ARG TARGETOS
 ARG TARGETARCH
 # Optional: overrides the version compiled into the binary (default: main.Version).
