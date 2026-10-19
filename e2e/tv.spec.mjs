@@ -4,7 +4,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { MEDIA_ROOT } from '../playwright.config.mjs';
 
-const SHOW = 'tv/Harbor Lights (2019) [tmdbid-9001]';
+const SHOW = 'tv/Harbor Lights (2019) [tmdbid-900100]';
 const bytes = (n, fill = 1) => Buffer.alloc(n, fill);
 const mkv = (name, size = 1024, fill = 1) => ({ name, mimeType: 'video/x-matroska', buffer: bytes(size, fill) });
 

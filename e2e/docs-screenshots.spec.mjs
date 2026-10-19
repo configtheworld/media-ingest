@@ -31,12 +31,12 @@ test('screenshots @docs', async ({ browser }) => {
   const phone = await browser.newContext({ ...devices['Pixel 7'] });
   page = await phone.newPage();
   await page.goto('/');
-  await page.getByRole('searchbox').fill('Inception');
+  await page.getByRole('searchbox').fill('The Clockwork Garden');
   await page.getByRole('button', { name: 'Search' }).click();
-  await expect(page.getByRole('button', { name: /Inception \(2010\)/ })).toBeVisible();
+  await expect(page.getByRole('button', { name: /The Clockwork Garden \(2015\)/ })).toBeVisible();
   await page.screenshot({ path: out('search-mobile') });
-  await page.getByRole('button', { name: /Inception \(2010\)/ }).click();
-  await page.locator('input[type=file]').first().setInputFiles([mkv('Inception.2010.2160p.mkv')]);
+  await page.getByRole('button', { name: /The Clockwork Garden \(2015\)/ }).click();
+  await page.locator('input[type=file]').first().setInputFiles([mkv('The.Clockwork.Garden.2015.2160p.mkv')]);
   await page.getByRole('button', { name: 'Next', exact: true }).click();
   await page.getByRole('button', { name: 'Next', exact: true }).click();
   await page.getByRole('button', { name: 'Upload and publish' }).click();

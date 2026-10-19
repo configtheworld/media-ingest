@@ -18,16 +18,16 @@ type Provider struct {
 
 func New() *Provider {
 	return &Provider{Movies: map[string]*provider.MovieDetails{
-		"27205": {ID: "27205", Title: "Inception", Year: 2010},
-		"100":   {ID: "100", Title: "Amélie: The Fabulous / Destiny?", Original: "Le Fabuleux Destin d'Amélie Poulain", Year: 2001},
-		"200":   {ID: "200", Title: "Untitled", Year: 0},
+		"900001": {ID: "900001", Title: "The Clockwork Garden", Year: 2015},
+		"900003": {ID: "900003", Title: "Émile: The Lost / Found?", Original: "L'Étrange Voyage d'Émile", Year: 2001},
+		"200":    {ID: "200", Title: "Untitled", Year: 0},
 	},
 		Shows: map[string]*provider.ShowDetails{
-			"9001": {ID: "9001", Title: "Harbor Lights", Year: 2019, Seasons: []provider.SeasonSummary{
+			"900100": {ID: "900100", Title: "Harbor Lights", Year: 2019, Seasons: []provider.SeasonSummary{
 				{Number: 0, Name: "Specials", EpisodeCount: 2}, {Number: 1, Name: "Season 1", EpisodeCount: 6}, {Number: 2, Name: "Season 2", EpisodeCount: 4}}},
 		},
 		Seasons: map[string]map[int]*provider.SeasonDetails{
-			"9001": {
+			"900100": {
 				0: {Number: 0, Name: "Specials", Episodes: eps("Behind the Harbor", "Lost Tapes")},
 				1: {Number: 1, Name: "Season 1", Episodes: eps("Arrival", "Fog", "Undertow", "Low Tide", "Beacon", "Homecoming")},
 				2: {Number: 2, Name: "Season 2", Episodes: eps("Return", "Drift", "Storm", "Dawn")},

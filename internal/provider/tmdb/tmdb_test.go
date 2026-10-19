@@ -25,16 +25,16 @@ func newTest(t *testing.T, key string, h http.HandlerFunc) *Client {
 func TestSearchMovie(t *testing.T) {
 	c := newTest(t, "k123", func(w http.ResponseWriter, r *http.Request) {
 		if r.URL.Path != "/search/movie" || r.URL.Query().Get("api_key") != "k123" ||
-			r.URL.Query().Get("language") != "de-DE" || r.URL.Query().Get("query") != "Inception" {
+			r.URL.Query().Get("language") != "de-DE" || r.URL.Query().Get("query") != "The Clockwork Garden" {
 			t.Errorf("unexpected request %s", r.URL)
 		}
-		w.Write([]byte(`{"page":1,"total_pages":1,"results":[{"id":27205,"title":"Inception","original_title":"Inception","release_date":"2010-07-15","overview":"x","poster_path":"/p.jpg"}]}`))
+		w.Write([]byte(`{"page":1,"total_pages":1,"results":[{"id":900001,"title":"The Clockwork Garden","original_title":"The Clockwork Garden","release_date":"2015-04-17","overview":"x","poster_path":"/p.jpg"}]}`))
 	})
-	res, err := c.Search(context.Background(), provider.Movie, "Inception", "de-DE", 1)
+	res, err := c.Search(context.Background(), provider.Movie, "The Clockwork Garden", "de-DE", 1)
 	if err != nil {
 		t.Fatal(err)
 	}
-	if len(res.Results) != 1 || res.Results[0].ID != "27205" || res.Results[0].Year != 2010 || res.Results[0].Original != "" {
+	if len(res.Results) != 1 || res.Results[0].ID != "900001" || res.Results[0].Year != 2015 || res.Results[0].Original != "" {
 		t.Fatalf("%+v", res)
 	}
 }

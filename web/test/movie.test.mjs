@@ -9,9 +9,9 @@ const GB = 1024 ** 3;
 
 test('single movie with subtitle and trailer', () => {
   const out = suggestMovieRoles([
-    { key: 'a', name: 'Inception.2010.1080p.mkv', size: 8 * GB },
-    { key: 'b', name: 'Inception.2010.en.forced.srt', size: 1000 },
-    { key: 'c', name: 'Inception Trailer.mp4', size: 50e6 },
+    { key: 'a', name: 'The.Clockwork.Garden.2015.1080p.mkv', size: 8 * GB },
+    { key: 'b', name: 'The.Clockwork.Garden.2015.en.forced.srt', size: 1000 },
+    { key: 'c', name: 'Clockwork Garden Trailer.mp4', size: 50e6 },
     { key: 'd', name: 'notes.txt', size: 10 },
   ], video, subs);
   const by = Object.fromEntries(out.map((f) => [f.key, f]));

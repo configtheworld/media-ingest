@@ -147,7 +147,7 @@ func TestUndoPrunesEmptyFolders(t *testing.T) {
 	if code := e.json("POST", "/api/batches/"+batch.ID+"/undo", nil, nil); code != 200 {
 		t.Fatalf("undo %d", code)
 	}
-	if _, err := os.Stat(filepath.Join(e.media, "movies", "Inception (2010) [tmdbid-27205]")); !os.IsNotExist(err) {
+	if _, err := os.Stat(filepath.Join(e.media, "movies", "The Clockwork Garden (2015) [tmdbid-900001]")); !os.IsNotExist(err) {
 		t.Fatal("empty movie folder should be removed")
 	}
 	if _, err := os.Stat(filepath.Join(e.media, "movies")); err != nil {

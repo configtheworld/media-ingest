@@ -8,14 +8,14 @@ const KEY = 'fake-api-key-0123456789';
 const PNG = Buffer.from('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=', 'base64');
 
 const movies = {
-  603: { id: 603, title: 'The Matrix', original_title: 'The Matrix', release_date: '1999-03-30', overview: 'A hacker learns the truth.', poster_path: '/matrix.png', runtime: 136 },
-  27205: { id: 27205, title: 'Inception', original_title: 'Inception', release_date: '2010-07-15', overview: 'A thief who steals corporate secrets through dream-sharing.', poster_path: '/poster.png', runtime: 148 },
+  900002: { id: 900002, title: 'Paper Moons', original_title: 'Paper Moons', release_date: '1999-03-30', overview: 'A fictional film used in tests.', poster_path: '/moons.png', runtime: 136 },
+  900001: { id: 900001, title: 'The Clockwork Garden', original_title: 'The Clockwork Garden', release_date: '2015-04-17', overview: 'A fictional film used in tests: a garden of clockwork flowers.', poster_path: '/poster.png', runtime: 148 },
 };
 
 const eps = (titles) => titles.map((name, i) => ({ episode_number: i + 1, name, air_date: `2019-0${(i % 9) + 1}-01` }));
 const shows = {
-  9001: {
-    id: 9001, name: 'Harbor Lights', original_name: 'Harbor Lights', first_air_date: '2019-03-01', overview: 'A fictional coastal drama.', poster_path: '/harbor.png',
+  900100: {
+    id: 900100, name: 'Harbor Lights', original_name: 'Harbor Lights', first_air_date: '2019-03-01', overview: 'A fictional coastal drama.', poster_path: '/harbor.png',
     seasons: [
       { season_number: 0, name: 'Specials', episode_count: 2, air_date: '2019-12-01' },
       { season_number: 1, name: 'Season 1', episode_count: 6, air_date: '2019-03-01' },

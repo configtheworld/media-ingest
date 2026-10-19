@@ -11,10 +11,10 @@ import (
 	"github.com/configtheworld/media-digest/internal/ingest"
 )
 
-const show = "tv/Harbor Lights (2019) [tmdbid-9001]"
+const show = "tv/Harbor Lights (2019) [tmdbid-900100]"
 
 func tvReq(items ...map[string]any) map[string]any {
-	return map[string]any{"provider": "tmdb", "id": "9001", "language": "en-US", "folder": map[string]any{"mode": "auto"}, "items": items}
+	return map[string]any{"provider": "tmdb", "id": "900100", "language": "en-US", "folder": map[string]any{"mode": "auto"}, "items": items}
 }
 
 func ep(key, name string, season, episode int, extra ...any) map[string]any {
@@ -123,7 +123,7 @@ func TestTVLibraryAwarenessAndReplace(t *testing.T) {
 	os.WriteFile(filepath.Join(e.media, show, "Season 01", "Harbor.Lights.S01E05E06.mkv"), []byte("x"), 0o644)
 
 	var lib ingest.LibraryView
-	if code := e.json("GET", "/api/library/tmdb/tv/9001?lang=en-US", nil, &lib); code != 200 {
+	if code := e.json("GET", "/api/library/tmdb/tv/900100?lang=en-US", nil, &lib); code != 200 {
 		t.Fatalf("library: %d", code)
 	}
 	have := map[string]bool{}
@@ -205,10 +205,10 @@ func TestTVKeepBothWithExistingEpisode(t *testing.T) {
 
 func TestTVFolderReuse(t *testing.T) {
 	e := newEnv(t, config.AuthProxy)
-	os.MkdirAll(filepath.Join(e.media, "tv", "Harbor Lights {tmdb-9001}", "Season 1"), 0o755)
+	os.MkdirAll(filepath.Join(e.media, "tv", "Harbor Lights {tmdb-900100}", "Season 1"), 0o755)
 	var plan ingest.Plan
 	e.json("POST", "/api/plan/tv", tvReq(ep("a", "a.mkv", 2, 1)), &plan)
-	if plan.FolderSource != "existing-id" || paths(plan)["a"] != "tv/Harbor Lights {tmdb-9001}/Season 02/Harbor Lights - S02E01 - Return.mkv" {
+	if plan.FolderSource != "existing-id" || paths(plan)["a"] != "tv/Harbor Lights {tmdb-900100}/Season 02/Harbor Lights - S02E01 - Return.mkv" {
 		t.Fatalf("%+v", plan)
 	}
 }

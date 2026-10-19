@@ -94,9 +94,9 @@ test('accessibility: dark mode colours also meet WCAG AA', async ({ page }) => {
   await page.emulateMedia({ colorScheme: 'dark' });
   await page.goto('/');
   await expect(page.getByRole('heading', { name: 'What are you adding?' })).toBeVisible();
-  await page.getByRole('searchbox').fill('Inception');
+  await page.getByRole('searchbox').fill('The Clockwork Garden');
   await page.getByRole('button', { name: 'Search' }).click();
-  await expect(page.getByRole('button', { name: /Inception \(2010\)/ })).toBeVisible();
+  await expect(page.getByRole('button', { name: /The Clockwork Garden \(2015\)/ })).toBeVisible();
   await expectAccessible(page, 'dark search');
   await page.getByRole('button', { name: 'Settings' }).click();
   await expect(page.getByRole('heading', { name: 'Settings' })).toBeVisible();

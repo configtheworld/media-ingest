@@ -5,6 +5,10 @@ All notable changes to this project are documented here. The project follows
 
 ## [Unreleased]
 
+### Changed
+- Tests, fixtures, documentation and screenshots use fictional titles and ids instead of real movies
+  and shows.
+
 ## [0.4.0] - 2026-10-17
 
 ### Added

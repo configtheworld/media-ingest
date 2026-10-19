@@ -17,13 +17,13 @@ Choose in **Settings → Naming**. The extension is always appended automaticall
 Results, Jellyfin preset:
 
 ```
-movies/Inception (2010) [tmdbid-27205]/Inception (2010) [tmdbid-27205].mkv
-movies/Inception (2010) [tmdbid-27205]/Inception (2010) [tmdbid-27205] - 2160p.mkv     (version)
-movies/Inception (2010) [tmdbid-27205]/Inception (2010) [tmdbid-27205].en.forced.srt   (subtitle)
-movies/Inception (2010) [tmdbid-27205]/Trailers/Official Trailer.mp4                     (extra)
-tv/Dark (2017) [tmdbid-70523]/Season 01/Dark - S01E02 - Lies.mkv
-tv/Dark (2017) [tmdbid-70523]/Season 01/Dark - S01E03-E04 - Past and Present & Double Lives.mkv
-tv/Dark (2017) [tmdbid-70523]/Season 00/Dark - S00E01 - ….mkv                          (special)
+movies/The Clockwork Garden (2015) [tmdbid-900001]/The Clockwork Garden (2015) [tmdbid-900001].mkv
+movies/The Clockwork Garden (2015) [tmdbid-900001]/The Clockwork Garden (2015) [tmdbid-900001] - 2160p.mkv     (version)
+movies/The Clockwork Garden (2015) [tmdbid-900001]/The Clockwork Garden (2015) [tmdbid-900001].en.forced.srt   (subtitle)
+movies/The Clockwork Garden (2015) [tmdbid-900001]/Trailers/Official Trailer.mp4                     (extra)
+tv/Harbor Lights (2019) [tmdbid-900100]/Season 01/Harbor Lights - S01E02 - Fog.mkv
+tv/Harbor Lights (2019) [tmdbid-900100]/Season 01/Harbor Lights - S01E03-E04 - Undertow & Low Tide.mkv
+tv/Harbor Lights (2019) [tmdbid-900100]/Season 00/Harbor Lights - S00E01 - Behind the Harbor.mkv                          (special)
 ```
 
 ## Template syntax

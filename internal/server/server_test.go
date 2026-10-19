@@ -198,7 +198,7 @@ func TestStrictJSON(t *testing.T) {
 }
 
 func movieReq(items ...map[string]any) map[string]any {
-	return map[string]any{"provider": "tmdb", "id": "27205", "language": "en-US", "folder": map[string]any{"mode": "auto"}, "items": items}
+	return map[string]any{"provider": "tmdb", "id": "900001", "language": "en-US", "folder": map[string]any{"mode": "auto"}, "items": items}
 }
 
 func movieItem(key, name string, size int) map[string]any {
@@ -236,8 +236,8 @@ func (e *env) upload(batchID, itemID string, data []byte) {
 
 func TestMovieFlowEndToEnd(t *testing.T) {
 	e := newEnv(t, config.AuthProxy)
-	req := movieReq(movieItem("m1", "Inception.2010.1080p.BluRay.mkv", 10),
-		map[string]any{"key": "s1", "name": "inception.en.forced.srt", "size": 4, "role": "subtitle", "lang": "en", "forced": true},
+	req := movieReq(movieItem("m1", "The.Clockwork.Garden.2015.1080p.BluRay.mkv", 10),
+		map[string]any{"key": "s1", "name": "clockwork.en.forced.srt", "size": 4, "role": "subtitle", "lang": "en", "forced": true},
 		map[string]any{"key": "x1", "name": "trailer.mp4", "size": 6, "role": "extra", "extraType": "trailer", "label": "Official Trailer"})
 
 	var plan ingest.Plan
@@ -245,9 +245,9 @@ func TestMovieFlowEndToEnd(t *testing.T) {
 		t.Fatalf("plan: %d", code)
 	}
 	want := map[string]string{
-		"m1": "movies/Inception (2010) [tmdbid-27205]/Inception (2010) [tmdbid-27205].mkv",
-		"s1": "movies/Inception (2010) [tmdbid-27205]/Inception (2010) [tmdbid-27205].en.forced.srt",
-		"x1": "movies/Inception (2010) [tmdbid-27205]/Trailers/Official Trailer.mp4",
+		"m1": "movies/The Clockwork Garden (2015) [tmdbid-900001]/The Clockwork Garden (2015) [tmdbid-900001].mkv",
+		"s1": "movies/The Clockwork Garden (2015) [tmdbid-900001]/The Clockwork Garden (2015) [tmdbid-900001].en.forced.srt",
+		"x1": "movies/The Clockwork Garden (2015) [tmdbid-900001]/Trailers/Official Trailer.mp4",
 	}
 	for _, it := range plan.Items {
 		if it.Path != want[it.Key] {
@@ -285,7 +285,7 @@ func TestMovieFlowEndToEnd(t *testing.T) {
 			t.Errorf("%s mode %v", it.Key, fi.Mode().Perm())
 		}
 	}
-	di, _ := os.Stat(filepath.Join(e.media, "movies/Inception (2010) [tmdbid-27205]"))
+	di, _ := os.Stat(filepath.Join(e.media, "movies/The Clockwork Garden (2015) [tmdbid-900001]"))
 	if di.Mode().Perm() != 0o755 {
 		t.Errorf("dir mode %v", di.Mode().Perm())
 	}
@@ -307,7 +307,7 @@ func TestMovieFlowEndToEnd(t *testing.T) {
 	e.json("POST", "/api/batches/movie", req2, &batch)
 	e.upload(batch.ID, batch.Items[0].ID, []byte("new"))
 	e.json("GET", "/api/batches/"+batch.ID, nil, &got)
-	if p := got.Items[0].FinalPath; p != "movies/Inception (2010) [tmdbid-27205]/Inception (2010) [tmdbid-27205] - Version 2.mkv" {
+	if p := got.Items[0].FinalPath; p != "movies/The Clockwork Garden (2015) [tmdbid-900001]/The Clockwork Garden (2015) [tmdbid-900001] - Version 2.mkv" {
 		t.Fatalf("keep both path %q", p)
 	}
 	if b, _ := os.ReadFile(filepath.Join(e.media, want["m1"])); string(b) != "0123456789" {
@@ -358,7 +358,7 @@ func TestHostileInputs(t *testing.T) {
 		req  map[string]any
 		code string
 	}{
-		"junk":         {movieReq(movieItem("m1", "._Inception.mkv", 5)), "junk_file"},
+		"junk":         {movieReq(movieItem("m1", "._Clockwork.mkv", 5)), "junk_file"},
 		"ds_store":     {movieReq(movieItem("m1", ".DS_Store", 5)), "junk_file"},
 		"extension":    {movieReq(movieItem("m1", "evil.exe", 5)), "extension_not_allowed"},
 		"no extension": {movieReq(movieItem("m1", "noext", 5)), "extension_not_allowed"},
@@ -389,11 +389,11 @@ func TestHostileInputs(t *testing.T) {
 	// A title full of path tricks still yields a single safe folder.
 	var plan ingest.Plan
 	r := movieReq(movieItem("m1", "a.mkv", 5))
-	r["id"] = "100"
+	r["id"] = "900003"
 	if code := e.json("POST", "/api/plan/movie", r, &plan); code != 200 {
 		t.Fatalf("plan: %d", code)
 	}
-	if p := plan.Items[0].Path; p != "movies/Amélie - The Fabulous - Destiny (2001) [tmdbid-100]/Amélie - The Fabulous - Destiny (2001) [tmdbid-100].mkv" {
+	if p := plan.Items[0].Path; p != "movies/Émile - The Lost - Found (2001) [tmdbid-900003]/Émile - The Lost - Found (2001) [tmdbid-900003].mkv" {
 		t.Fatalf("path %q", p)
 	}
 	// An edited display title is sanitized the same way.
@@ -548,22 +548,22 @@ func TestSetupPage(t *testing.T) {
 
 func TestFolderReuseByProviderID(t *testing.T) {
 	e := newEnv(t, config.AuthProxy)
-	os.MkdirAll(filepath.Join(e.media, "movies", "Inception {tmdb-27205}"), 0o755)
-	os.MkdirAll(filepath.Join(e.media, "movies", "Inception (2010)"), 0o755)
+	os.MkdirAll(filepath.Join(e.media, "movies", "The Clockwork Garden {tmdb-900001}"), 0o755)
+	os.MkdirAll(filepath.Join(e.media, "movies", "The Clockwork Garden (2015)"), 0o755)
 	var plan ingest.Plan
 	e.json("POST", "/api/plan/movie", movieReq(movieItem("m1", "a.mkv", 5)), &plan)
-	if plan.Folder != "Inception {tmdb-27205}" || plan.FolderSource != "existing-id" {
+	if plan.Folder != "The Clockwork Garden {tmdb-900001}" || plan.FolderSource != "existing-id" {
 		t.Fatalf("%+v", plan)
 	}
-	os.Remove(filepath.Join(e.media, "movies", "Inception {tmdb-27205}"))
+	os.Remove(filepath.Join(e.media, "movies", "The Clockwork Garden {tmdb-900001}"))
 	e.json("POST", "/api/plan/movie", movieReq(movieItem("m1", "a.mkv", 5)), &plan)
-	if plan.FolderSource != "new" || len(plan.FolderCandidates) != 1 || plan.FolderCandidates[0] != "Inception (2010)" {
+	if plan.FolderSource != "new" || len(plan.FolderCandidates) != 1 || plan.FolderCandidates[0] != "The Clockwork Garden (2015)" {
 		t.Fatalf("%+v", plan)
 	}
 	r := movieReq(movieItem("m1", "a.mkv", 5))
-	r["folder"] = map[string]any{"mode": "existing", "name": "Inception (2010)"}
+	r["folder"] = map[string]any{"mode": "existing", "name": "The Clockwork Garden (2015)"}
 	e.json("POST", "/api/plan/movie", r, &plan)
-	if plan.Items[0].Path != "movies/Inception (2010)/Inception (2010) [tmdbid-27205].mkv" {
+	if plan.Items[0].Path != "movies/The Clockwork Garden (2015)/The Clockwork Garden (2015) [tmdbid-900001].mkv" {
 		t.Fatalf("%q", plan.Items[0].Path)
 	}
 }

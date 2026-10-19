@@ -4,7 +4,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { MEDIA_ROOT } from '../playwright.config.mjs';
 
-const FOLDER = 'Inception (2010) [tmdbid-27205]';
+const FOLDER = 'The Clockwork Garden (2015) [tmdbid-900001]';
 const MOVIE = `movies/${FOLDER}/${FOLDER}.mkv`;
 const SUB = `movies/${FOLDER}/${FOLDER}.en.srt`;
 
@@ -14,9 +14,9 @@ const movieBytes = Buffer.alloc(20 * 1024 * 1024, 7);
 async function searchAndPick(page) {
   await page.goto('/');
   await expect(page.getByRole('heading', { name: 'What are you adding?' })).toBeVisible();
-  await page.getByRole('searchbox').fill('Inception');
+  await page.getByRole('searchbox').fill('The Clockwork Garden');
   await page.getByRole('button', { name: 'Search' }).click();
-  const card = page.getByRole('button', { name: /Inception \(2010\)/ });
+  const card = page.getByRole('button', { name: /The Clockwork Garden \(2015\)/ });
   await expect(card).toBeVisible();
   await expect(card.locator('img')).toHaveJSProperty('naturalWidth', 1); // poster served through the server-side proxy
   await card.click();
@@ -30,9 +30,9 @@ test('movie: search, add files, map, review, upload, publish', async ({ page }) 
   await searchAndPick(page);
 
   await page.locator('input[type=file]').first().setInputFiles([
-    { name: 'Inception.2010.1080p.BluRay.mkv', mimeType: 'video/x-matroska', buffer: movieBytes },
-    { name: 'Inception.2010.en.srt', mimeType: 'text/plain', buffer: Buffer.from('1\n00:00:01,000 --> 00:00:02,000\nHi\n') },
-    { name: '._Inception.2010.1080p.BluRay.mkv', mimeType: 'application/octet-stream', buffer: Buffer.from('junk') },
+    { name: 'The.Clockwork.Garden.2015.1080p.BluRay.mkv', mimeType: 'video/x-matroska', buffer: movieBytes },
+    { name: 'The.Clockwork.Garden.2015.en.srt', mimeType: 'text/plain', buffer: Buffer.from('1\n00:00:01,000 --> 00:00:02,000\nHi\n') },
+    { name: '._The.Clockwork.Garden.2015.1080p.BluRay.mkv', mimeType: 'application/octet-stream', buffer: Buffer.from('junk') },
     { name: 'readme.txt', mimeType: 'text/plain', buffer: Buffer.from('nope') },
   ]);
   await expect(page.getByText('2 files ignored')).toBeVisible();
@@ -64,7 +64,7 @@ test('movie: search, add files, map, review, upload, publish', async ({ page }) 
   expect(fs.statSync(path.dirname(movie)).mode & 0o777).toBe(0o755);
   expect(fs.readFileSync(path.join(MEDIA_ROOT, SUB), 'utf8')).toContain('Hi');
   expect(fs.readdirSync(path.join(MEDIA_ROOT, '.incoming'))).toEqual([]);
-  expect(fs.existsSync(path.join(MEDIA_ROOT, 'movies', FOLDER, '._Inception.2010.1080p.BluRay.mkv'))).toBe(false);
+  expect(fs.existsSync(path.join(MEDIA_ROOT, 'movies', FOLDER, '._The.Clockwork.Garden.2015.1080p.BluRay.mkv'))).toBe(false);
 
   // The browser never talks to TMDB and never sees the API key.
   expect(seen.filter((u) => !u.startsWith('http://127.0.0.1:18097/'))).toEqual([]);
@@ -76,7 +76,7 @@ test('movie: search, add files, map, review, upload, publish', async ({ page }) 
 test('movie: existing file requires an explicit decision, keep both', async ({ page }) => {
   await searchAndPick(page);
   await page.locator('input[type=file]').first().setInputFiles([
-    { name: 'Inception.remux.mkv', mimeType: 'video/x-matroska', buffer: Buffer.from('second copy') },
+    { name: 'Clockwork.Garden.remux.mkv', mimeType: 'video/x-matroska', buffer: Buffer.from('second copy') },
   ]);
   await page.getByRole('button', { name: 'Next' }).click();
   await page.getByRole('button', { name: 'Next' }).click();
@@ -96,7 +96,7 @@ test('movie: existing file requires an explicit decision, keep both', async ({ p
 test('movie: upload survives a page reload and resumes from the server offset', async ({ page }) => {
   const dir = path.resolve('e2e/.tmp/resume');
   fs.mkdirSync(dir, { recursive: true });
-  const file = path.join(dir, 'The.Matrix.1999.mkv');
+  const file = path.join(dir, 'Paper.Moons.1999.mkv');
   fs.writeFileSync(file, Buffer.alloc(20 * 1024 * 1024, 3)); // 3 chunks of up to 8 MiB
 
   // Let the first chunk through, then simulate a dead connection.
@@ -108,9 +108,9 @@ test('movie: upload survives a page reload and resumes from the server offset', 
   });
 
   await page.goto('/');
-  await page.getByRole('searchbox').fill('Matrix');
+  await page.getByRole('searchbox').fill('Paper Moons');
   await page.getByRole('button', { name: 'Search' }).click();
-  await page.getByRole('button', { name: /The Matrix \(1999\)/ }).click();
+  await page.getByRole('button', { name: /Paper Moons \(1999\)/ }).click();
   await page.locator('input[type=file]').first().setInputFiles(file);
   await page.getByRole('button', { name: 'Next' }).click();
   await page.getByRole('button', { name: 'Next' }).click();
@@ -132,7 +132,7 @@ test('movie: upload survives a page reload and resumes from the server offset', 
   expect(after.filter((m) => m === 'HEAD').length).toBeGreaterThanOrEqual(1);
   expect(after.filter((m) => m === 'PATCH').length).toBe(2);
   expect(after.includes('POST')).toBe(false);
-  const out = path.join(MEDIA_ROOT, 'movies/The Matrix (1999) [tmdbid-603]/The Matrix (1999) [tmdbid-603].mkv');
+  const out = path.join(MEDIA_ROOT, 'movies/Paper Moons (1999) [tmdbid-900002]/Paper Moons (1999) [tmdbid-900002].mkv');
   expect(fs.statSync(out).size).toBe(20 * 1024 * 1024);
   expect(fs.readFileSync(out).equals(fs.readFileSync(file))).toBe(true);
 });

@@ -68,8 +68,8 @@ Full guides: **[deployment](docs/deployment.md)** · **[reverse proxies](docs/re
    step that fails instead of overwriting. Replaced files go to `.trash`, and **Undo** puts them back.
 
 ```
-movies/Inception (2010) [tmdbid-27205]/Inception (2010) [tmdbid-27205].mkv
-tv/Dark (2017) [tmdbid-70523]/Season 01/Dark - S01E02 - Lies.mkv
+movies/The Clockwork Garden (2015) [tmdbid-900001]/The Clockwork Garden (2015) [tmdbid-900001].mkv
+tv/Harbor Lights (2019) [tmdbid-900100]/Season 01/Harbor Lights - S01E02 - Fog.mkv
 ```
 
 ## Screenshots
