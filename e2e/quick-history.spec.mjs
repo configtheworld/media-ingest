@@ -66,16 +66,16 @@ test('German file names are mapped by the bundled rule pack', async ({ page }) =
   await page.goto('/');
   await page.getByRole('button', { name: 'New', exact: true }).click();
   await page.getByRole('radio', { name: 'TV show' }).check();
-  await page.getByRole('searchbox').fill('Harbor');
+  await page.getByRole('searchbox').fill('Quillmoor');
   await page.getByRole('button', { name: 'Search' }).click();
-  await page.getByRole('button', { name: /Harbor Lights \(2019\)/ }).click();
+  await page.getByRole('button', { name: /Quillmoor Bay \(2019\)/ }).click();
   await page.getByRole('checkbox', { name: /^Season 1/ }).check();
   await page.getByRole('checkbox', { name: /^Season 2/ }).check();
   await page.getByRole('button', { name: 'Next', exact: true }).click();
   await page.locator('input[type=file]').first().setInputFiles([
-    { name: 'Harbor Lights Staffel 2 Folge 3 German DL.mkv', mimeType: 'video/x-matroska', buffer: Buffer.alloc(10) },
-    { name: 'Harbor Lights 1. Sezon 5. Bölüm.mkv', mimeType: 'video/x-matroska', buffer: Buffer.alloc(10) },
-    { name: 'Harbor Lights Temporada 1 Capitulo 6.mkv', mimeType: 'video/x-matroska', buffer: Buffer.alloc(10) },
+    { name: 'Quillmoor Bay Staffel 2 Folge 3 German DL.mkv', mimeType: 'video/x-matroska', buffer: Buffer.alloc(10) },
+    { name: 'Quillmoor Bay 1. Sezon 5. Bölüm.mkv', mimeType: 'video/x-matroska', buffer: Buffer.alloc(10) },
+    { name: 'Quillmoor Bay Temporada 1 Capitulo 6.mkv', mimeType: 'video/x-matroska', buffer: Buffer.alloc(10) },
   ]);
   await page.getByRole('button', { name: 'Next', exact: true }).click();
   const badge = (n) => page.locator('.frow', { hasText: n }).locator('.badge').first();

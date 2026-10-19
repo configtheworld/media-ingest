@@ -96,7 +96,7 @@ test('movie: existing file requires an explicit decision, keep both', async ({ p
 test('movie: upload survives a page reload and resumes from the server offset', async ({ page }) => {
   const dir = path.resolve('e2e/.tmp/resume');
   fs.mkdirSync(dir, { recursive: true });
-  const file = path.join(dir, 'Paper.Moons.1999.mkv');
+  const file = path.join(dir, 'Saltglass.Summer.1999.mkv');
   fs.writeFileSync(file, Buffer.alloc(20 * 1024 * 1024, 3)); // 3 chunks of up to 8 MiB
 
   // Let the first chunk through, then simulate a dead connection.
@@ -108,9 +108,9 @@ test('movie: upload survives a page reload and resumes from the server offset', 
   });
 
   await page.goto('/');
-  await page.getByRole('searchbox').fill('Paper Moons');
+  await page.getByRole('searchbox').fill('Saltglass Summer');
   await page.getByRole('button', { name: 'Search' }).click();
-  await page.getByRole('button', { name: /Paper Moons \(1999\)/ }).click();
+  await page.getByRole('button', { name: /Saltglass Summer \(1999\)/ }).click();
   await page.locator('input[type=file]').first().setInputFiles(file);
   await page.getByRole('button', { name: 'Next' }).click();
   await page.getByRole('button', { name: 'Next' }).click();
@@ -132,7 +132,7 @@ test('movie: upload survives a page reload and resumes from the server offset', 
   expect(after.filter((m) => m === 'HEAD').length).toBeGreaterThanOrEqual(1);
   expect(after.filter((m) => m === 'PATCH').length).toBe(2);
   expect(after.includes('POST')).toBe(false);
-  const out = path.join(MEDIA_ROOT, 'movies/Paper Moons (1999) [tmdbid-900002]/Paper Moons (1999) [tmdbid-900002].mkv');
+  const out = path.join(MEDIA_ROOT, 'movies/Saltglass Summer (1999) [tmdbid-900002]/Saltglass Summer (1999) [tmdbid-900002].mkv');
   expect(fs.statSync(out).size).toBe(20 * 1024 * 1024);
   expect(fs.readFileSync(out).equals(fs.readFileSync(file))).toBe(true);
 });

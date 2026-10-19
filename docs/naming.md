@@ -21,9 +21,9 @@ movies/The Clockwork Garden (2015) [tmdbid-900001]/The Clockwork Garden (2015) [
 movies/The Clockwork Garden (2015) [tmdbid-900001]/The Clockwork Garden (2015) [tmdbid-900001] - 2160p.mkv     (version)
 movies/The Clockwork Garden (2015) [tmdbid-900001]/The Clockwork Garden (2015) [tmdbid-900001].en.forced.srt   (subtitle)
 movies/The Clockwork Garden (2015) [tmdbid-900001]/Trailers/Official Trailer.mp4                     (extra)
-tv/Harbor Lights (2019) [tmdbid-900100]/Season 01/Harbor Lights - S01E02 - Fog.mkv
-tv/Harbor Lights (2019) [tmdbid-900100]/Season 01/Harbor Lights - S01E03-E04 - Undertow & Low Tide.mkv
-tv/Harbor Lights (2019) [tmdbid-900100]/Season 00/Harbor Lights - S00E01 - Behind the Harbor.mkv                          (special)
+tv/Quillmoor Bay (2019) [tmdbid-900100]/Season 01/Quillmoor Bay - S01E02 - Fog.mkv
+tv/Quillmoor Bay (2019) [tmdbid-900100]/Season 01/Quillmoor Bay - S01E03-E04 - Undertow & Low Tide.mkv
+tv/Quillmoor Bay (2019) [tmdbid-900100]/Season 00/Quillmoor Bay - S00E01 - Behind the Bay.mkv                          (special)
 ```
 
 ## Template syntax

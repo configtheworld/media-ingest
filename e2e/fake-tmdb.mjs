@@ -8,21 +8,21 @@ const KEY = 'fake-api-key-0123456789';
 const PNG = Buffer.from('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=', 'base64');
 
 const movies = {
-  900002: { id: 900002, title: 'Paper Moons', original_title: 'Paper Moons', release_date: '1999-03-30', overview: 'A fictional film used in tests.', poster_path: '/moons.png', runtime: 136 },
+  900002: { id: 900002, title: 'Saltglass Summer', original_title: 'Saltglass Summer', release_date: '1999-03-30', overview: 'A fictional film used in tests.', poster_path: '/saltglass.png', runtime: 136 },
   900001: { id: 900001, title: 'The Clockwork Garden', original_title: 'The Clockwork Garden', release_date: '2015-04-17', overview: 'A fictional film used in tests: a garden of clockwork flowers.', poster_path: '/poster.png', runtime: 148 },
 };
 
 const eps = (titles) => titles.map((name, i) => ({ episode_number: i + 1, name, air_date: `2019-0${(i % 9) + 1}-01` }));
 const shows = {
   900100: {
-    id: 900100, name: 'Harbor Lights', original_name: 'Harbor Lights', first_air_date: '2019-03-01', overview: 'A fictional coastal drama.', poster_path: '/harbor.png',
+    id: 900100, name: 'Quillmoor Bay', original_name: 'Quillmoor Bay', first_air_date: '2019-03-01', overview: 'A fictional coastal drama.', poster_path: '/quillmoor.png',
     seasons: [
       { season_number: 0, name: 'Specials', episode_count: 2, air_date: '2019-12-01' },
       { season_number: 1, name: 'Season 1', episode_count: 6, air_date: '2019-03-01' },
       { season_number: 2, name: 'Season 2', episode_count: 4, air_date: '2020-03-01' },
     ],
     episodes: {
-      0: eps(['Behind the Harbor', 'Lost Tapes']),
+      0: eps(['Behind the Bay', 'Lost Tapes']),
       1: eps(['Arrival', 'Fog', 'Undertow', 'Low Tide', 'Beacon', 'Homecoming']),
       2: eps(['Return', 'Drift', 'Storm', 'Dawn']),
     },

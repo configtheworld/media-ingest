@@ -66,7 +66,7 @@ func TestUndoRestoresReplacedFilesAndNotifiesJellyfin(t *testing.T) {
 	})
 
 	// Library: an old copy of S01E02 under another name.
-	old := show + "/Season 01/Harbor.Lights.S01E02.720p.mkv"
+	old := show + "/Season 01/Quillmoor.Bay.S01E02.720p.mkv"
 	os.MkdirAll(filepath.Join(e.media, filepath.Dir(old)), 0o755)
 	os.WriteFile(filepath.Join(e.media, old), []byte("old"), 0o644)
 
@@ -81,8 +81,8 @@ func TestUndoRestoresReplacedFilesAndNotifiesJellyfin(t *testing.T) {
 	for _, u := range jf.last() {
 		got[u["Path"]] = u["UpdateType"]
 	}
-	if got["/jf/"+old] != "Deleted" || got["/jf/"+show+"/Season 01/Harbor Lights - S01E02 - Fog.mkv"] != "Created" ||
-		got["/jf/"+show+"/Season 02/Harbor Lights - S02E01 - Return.mkv"] != "Created" {
+	if got["/jf/"+old] != "Deleted" || got["/jf/"+show+"/Season 01/Quillmoor Bay - S01E02 - Fog.mkv"] != "Created" ||
+		got["/jf/"+show+"/Season 02/Quillmoor Bay - S02E01 - Return.mkv"] != "Created" {
 		t.Fatalf("jellyfin updates %v", got)
 	}
 	var view ingest.BatchView
@@ -96,7 +96,7 @@ func TestUndoRestoresReplacedFilesAndNotifiesJellyfin(t *testing.T) {
 	}
 
 	// Someone changed one published file afterwards: undo must leave it alone.
-	changed := filepath.Join(e.media, show, "Season 02", "Harbor Lights - S02E01 - Return.mkv")
+	changed := filepath.Join(e.media, show, "Season 02", "Quillmoor Bay - S02E01 - Return.mkv")
 	os.WriteFile(changed, []byte("edited by someone else"), 0o644)
 
 	var undone ingest.BatchView
@@ -109,7 +109,7 @@ func TestUndoRestoresReplacedFilesAndNotifiesJellyfin(t *testing.T) {
 	if b, _ := os.ReadFile(filepath.Join(e.media, old)); string(b) != "old" {
 		t.Fatal("replaced file was not restored")
 	}
-	if _, err := os.Stat(filepath.Join(e.media, show, "Season 01", "Harbor Lights - S01E02 - Fog.mkv")); !os.IsNotExist(err) {
+	if _, err := os.Stat(filepath.Join(e.media, show, "Season 01", "Quillmoor Bay - S01E02 - Fog.mkv")); !os.IsNotExist(err) {
 		t.Fatal("published file still in the library")
 	}
 	if b, _ := os.ReadFile(changed); string(b) != "edited by someone else" {

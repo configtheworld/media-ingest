@@ -9,22 +9,22 @@ test('screenshots @docs', async ({ browser }) => {
   let page = await desktop.newPage();
   await page.goto('/');
   await page.getByRole('radio', { name: 'TV show' }).check();
-  await page.getByRole('searchbox').fill('Harbor');
+  await page.getByRole('searchbox').fill('Quillmoor');
   await page.getByRole('button', { name: 'Search' }).click();
-  await page.getByRole('button', { name: /Harbor Lights \(2019\)/ }).click();
+  await page.getByRole('button', { name: /Quillmoor Bay \(2019\)/ }).click();
   await page.getByRole('checkbox', { name: /^Specials/ }).check();
   await page.getByRole('checkbox', { name: /^Season 1/ }).check();
   await page.getByRole('button', { name: 'Next', exact: true }).click();
   await page.locator('input[type=file]').first().setInputFiles([
-    mkv('Harbor.Lights.S01E01.1080p.WEB-DL.mkv'), mkv('Harbor.Lights.S01E02.mkv'), mkv('Harbor.Lights.S01E03E04.mkv'),
-    { name: 'Harbor.Lights.S01E01.1080p.WEB-DL.en.srt', mimeType: 'text/plain', buffer: Buffer.from('x') },
+    mkv('Quillmoor.Bay.S01E01.1080p.WEB-DL.mkv'), mkv('Quillmoor.Bay.S01E02.mkv'), mkv('Quillmoor.Bay.S01E03E04.mkv'),
+    { name: 'Quillmoor.Bay.S01E01.1080p.WEB-DL.en.srt', mimeType: 'text/plain', buffer: Buffer.from('x') },
     mkv('behind the scenes.mkv'),
   ]);
   await page.getByRole('button', { name: 'Next', exact: true }).click();
   await expect(page.getByRole('heading', { name: 'Match files to episodes' })).toBeVisible();
   await page.screenshot({ path: out('tv-mapping-desktop'), fullPage: true });
   await page.getByRole('button', { name: 'Next', exact: true }).click();
-  await expect(page.getByText(/Season 01\/Harbor Lights - S01E01 - Arrival\.mkv/).first()).toBeVisible();
+  await expect(page.getByText(/Season 01\/Quillmoor Bay - S01E01 - Arrival\.mkv/).first()).toBeVisible();
   await page.screenshot({ path: out('review-desktop'), fullPage: true });
   await desktop.close();
 
@@ -51,9 +51,9 @@ test('screenshots @docs', async ({ browser }) => {
   page = await dark.newPage();
   await page.goto('/');
   await page.getByRole('radio', { name: 'Serie' }).check();
-  await page.getByRole('searchbox').fill('Harbor');
+  await page.getByRole('searchbox').fill('Quillmoor');
   await page.getByRole('button', { name: 'Suchen' }).click();
-  await page.getByRole('button', { name: /Harbor Lights \(2019\)/ }).click();
+  await page.getByRole('button', { name: /Quillmoor Bay \(2019\)/ }).click();
   await expect(page.getByRole('heading', { name: 'Welche Staffeln?' })).toBeVisible();
   await page.screenshot({ path: out('seasons-dark-de') });
   await dark.close();

@@ -69,7 +69,7 @@ Full guides: **[deployment](docs/deployment.md)** · **[reverse proxies](docs/re
 
 ```
 movies/The Clockwork Garden (2015) [tmdbid-900001]/The Clockwork Garden (2015) [tmdbid-900001].mkv
-tv/Harbor Lights (2019) [tmdbid-900100]/Season 01/Harbor Lights - S01E02 - Fog.mkv
+tv/Quillmoor Bay (2019) [tmdbid-900100]/Season 01/Quillmoor Bay - S01E02 - Fog.mkv
 ```
 
 ## Screenshots
@@ -89,6 +89,15 @@ silently, and state-changing requests need a CSRF token. Details and how to repo
 
 Bug reports, translations and rule packs for more languages are very welcome — see
 [CONTRIBUTING.md](CONTRIBUTING.md). Changes are listed in the [changelog](CHANGELOG.md).
+
+## Disclaimer
+
+media-ingest only organises files you upload to your own server: it renames them and moves them into
+your library folders. It does not search for, download, stream or share media, and it does not bypass
+copy protection. Use it only with content you have the right to store and use. You are solely
+responsible for the files you process and for complying with copyright and other laws that apply to
+you. The authors and contributors do not endorse copyright infringement and accept no liability for how
+the software is used; see also the warranty and liability terms of the [MIT License](LICENSE).
 
 ## Attribution and license
 

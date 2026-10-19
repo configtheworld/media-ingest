@@ -4,7 +4,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { MEDIA_ROOT } from '../playwright.config.mjs';
 
-const SHOW = 'tv/Harbor Lights (2019) [tmdbid-900100]';
+const SHOW = 'tv/Quillmoor Bay (2019) [tmdbid-900100]';
 const bytes = (n, fill = 1) => Buffer.alloc(n, fill);
 const mkv = (name, size = 1024, fill = 1) => ({ name, mimeType: 'video/x-matroska', buffer: bytes(size, fill) });
 
@@ -13,9 +13,9 @@ test.describe.configure({ mode: 'serial' });
 async function openShow(page, seasons) {
   await page.goto('/');
   await page.getByRole('radio', { name: 'TV show' }).check();
-  await page.getByRole('searchbox').fill('Harbor');
+  await page.getByRole('searchbox').fill('Quillmoor');
   await page.getByRole('button', { name: 'Search' }).click();
-  await page.getByRole('button', { name: /Harbor Lights \(2019\)/ }).click();
+  await page.getByRole('button', { name: /Quillmoor Bay \(2019\)/ }).click();
   await expect(page.getByRole('heading', { name: 'Which seasons?' })).toBeVisible();
   for (const s of seasons) await page.getByRole('checkbox', { name: new RegExp(`^${s}`) }).check();
   await page.getByRole('button', { name: 'Next', exact: true }).click();
@@ -27,12 +27,12 @@ const row = (page, name) => page.locator('.frow', { hasText: name });
 test('tv: seasons, auto-mapping, tap to assign a special, upload', async ({ page }) => {
   await openShow(page, ['Specials', 'Season 1']);
   await page.locator('input[type=file]').first().setInputFiles([
-    mkv('Harbor.Lights.S01E01.1080p.WEB-DL.mkv', 300_000, 1),
-    mkv('Harbor.Lights.S01E02.mkv', 2048, 2),
-    mkv('Harbor.Lights.S01E03E04.mkv', 2048, 3),
-    { name: 'Harbor.Lights.S01E01.1080p.WEB-DL.en.srt', mimeType: 'text/plain', buffer: Buffer.from('1\n00:00:01,000 --> 00:00:02,000\nHi\n') },
+    mkv('Quillmoor.Bay.S01E01.1080p.WEB-DL.mkv', 300_000, 1),
+    mkv('Quillmoor.Bay.S01E02.mkv', 2048, 2),
+    mkv('Quillmoor.Bay.S01E03E04.mkv', 2048, 3),
+    { name: 'Quillmoor.Bay.S01E01.1080p.WEB-DL.en.srt', mimeType: 'text/plain', buffer: Buffer.from('1\n00:00:01,000 --> 00:00:02,000\nHi\n') },
     mkv('behind the scenes special.mkv', 1024, 4),
-    { name: '._Harbor.Lights.S01E02.mkv', mimeType: 'application/octet-stream', buffer: Buffer.from('junk') },
+    { name: '._Quillmoor.Bay.S01E02.mkv', mimeType: 'application/octet-stream', buffer: Buffer.from('junk') },
   ]);
   await expect(page.getByText('1 files ignored')).toBeVisible();
   await page.getByRole('button', { name: 'Next', exact: true }).click();
@@ -48,7 +48,7 @@ test('tv: seasons, auto-mapping, tap to assign a special, upload', async ({ page
   // Touch: tap "Pick" on the file, then tap the episode.
   await row(page, 'special.mkv').getByRole('button', { name: 'Pick' }).tap();
   await expect(page.getByText('Now tap the episode for behind the scenes special.mkv.')).toBeVisible();
-  await page.getByRole('button', { name: 'S00E01 Behind the Harbor' }).tap();
+  await page.getByRole('button', { name: 'S00E01 Behind the Bay' }).tap();
   await expect(row(page, 'special.mkv').locator('.badge').first()).toHaveText('S00E01');
   await expect(page.locator('.tapbanner')).toBeHidden();
   await page.screenshot({ path: 'e2e/.tmp/tv-map-mobile.png', fullPage: true });
@@ -56,11 +56,11 @@ test('tv: seasons, auto-mapping, tap to assign a special, upload', async ({ page
   await page.getByRole('button', { name: 'Next', exact: true }).click();
   await expect(page.getByRole('heading', { name: 'Review' })).toBeVisible();
   const want = [
-    `${SHOW}/Season 00/Harbor Lights - S00E01 - Behind the Harbor.mkv`,
-    `${SHOW}/Season 01/Harbor Lights - S01E01 - Arrival.mkv`,
-    `${SHOW}/Season 01/Harbor Lights - S01E01 - Arrival.en.srt`,
-    `${SHOW}/Season 01/Harbor Lights - S01E02 - Fog.mkv`,
-    `${SHOW}/Season 01/Harbor Lights - S01E03-E04 - Undertow & Low Tide.mkv`,
+    `${SHOW}/Season 00/Quillmoor Bay - S00E01 - Behind the Bay.mkv`,
+    `${SHOW}/Season 01/Quillmoor Bay - S01E01 - Arrival.mkv`,
+    `${SHOW}/Season 01/Quillmoor Bay - S01E01 - Arrival.en.srt`,
+    `${SHOW}/Season 01/Quillmoor Bay - S01E02 - Fog.mkv`,
+    `${SHOW}/Season 01/Quillmoor Bay - S01E03-E04 - Undertow & Low Tide.mkv`,
   ];
   for (const p of want) await expect(page.getByText(p, { exact: true })).toBeVisible();
   await page.getByRole('button', { name: 'Upload and publish' }).click();
@@ -75,9 +75,9 @@ test('tv: seasons, auto-mapping, tap to assign a special, upload', async ({ page
 test('tv: library awareness, alternate versions, keep both', async ({ page }) => {
   await page.goto('/');
   await page.getByRole('radio', { name: 'TV show' }).check();
-  await page.getByRole('searchbox').fill('Harbor');
+  await page.getByRole('searchbox').fill('Quillmoor');
   await page.getByRole('button', { name: 'Search' }).click();
-  await page.getByRole('button', { name: /Harbor Lights \(2019\)/ }).click();
+  await page.getByRole('button', { name: /Quillmoor Bay \(2019\)/ }).click();
   // The season list knows what the library already has.
   await expect(page.getByText('5 episode files already in the library')).toBeVisible();
   await expect(page.getByRole('checkbox', { name: /^Season 1 · 6 episodes · 2019 · 4 in library/ })).toBeVisible();
@@ -85,8 +85,8 @@ test('tv: library awareness, alternate versions, keep both', async ({ page }) =>
   await page.getByRole('button', { name: 'Next', exact: true }).click();
 
   await page.locator('input[type=file]').first().setInputFiles([
-    mkv('Harbor.Lights.S01E02.2160p.mkv', 2048, 5),
-    mkv('Harbor.Lights.S01E02.REMUX.2160p.mkv', 4096, 6),
+    mkv('Quillmoor.Bay.S01E02.2160p.mkv', 2048, 5),
+    mkv('Quillmoor.Bay.S01E02.REMUX.2160p.mkv', 4096, 6),
   ]);
   await page.getByRole('button', { name: 'Next', exact: true }).click();
 
@@ -100,7 +100,7 @@ test('tv: library awareness, alternate versions, keep both', async ({ page }) =>
   await next.click();
 
   await expect(page.getByText('2 destination(s) already exist')).toBeVisible();
-  await expect(page.getByText(`${SHOW}/Season 01/Harbor Lights - S01E02 - Fog.mkv`).first()).toBeVisible(); // listed as existing
+  await expect(page.getByText(`${SHOW}/Season 01/Quillmoor Bay - S01E02 - Fog.mkv`).first()).toBeVisible(); // listed as existing
   const confirm = page.getByRole('button', { name: 'Upload and publish' });
   await expect(confirm).toBeDisabled();
   await page.getByRole('button', { name: 'Keep both' }).click(); // apply to all conflicts
@@ -109,17 +109,17 @@ test('tv: library awareness, alternate versions, keep both', async ({ page }) =>
   await expect(page.getByText(/2 of 2 files published/)).toBeVisible({ timeout: 30_000 });
 
   const dir = path.join(MEDIA_ROOT, SHOW, 'Season 01');
-  expect(fs.statSync(path.join(dir, 'Harbor Lights - S01E02 - Fog - 2160p.mkv')).size).toBe(2048);
-  expect(fs.statSync(path.join(dir, 'Harbor Lights - S01E02 - Fog - Remux.mkv')).size).toBe(4096);
-  expect(fs.readFileSync(path.join(dir, 'Harbor Lights - S01E02 - Fog.mkv'))[0]).toBe(2); // original untouched
+  expect(fs.statSync(path.join(dir, 'Quillmoor Bay - S01E02 - Fog - 2160p.mkv')).size).toBe(2048);
+  expect(fs.statSync(path.join(dir, 'Quillmoor Bay - S01E02 - Fog - Remux.mkv')).size).toBe(4096);
+  expect(fs.readFileSync(path.join(dir, 'Quillmoor Bay - S01E02 - Fog.mkv'))[0]).toBe(2); // original untouched
 });
 
 test('tv: desktop drag and drop, swap, sequential fallback @desktop', async ({ page }) => {
   await page.goto('/');
   await page.getByRole('radio', { name: 'TV show' }).check();
-  await page.getByRole('searchbox').fill('Harbor');
+  await page.getByRole('searchbox').fill('Quillmoor');
   await page.getByRole('button', { name: 'Search' }).click();
-  await page.getByRole('button', { name: /Harbor Lights \(2019\)/ }).click();
+  await page.getByRole('button', { name: /Quillmoor Bay \(2019\)/ }).click();
   await page.getByRole('checkbox', { name: /^Season 2/ }).check();
   await page.getByRole('button', { name: 'Next', exact: true }).click();
   // No episode numbers in these names: natural order from S02E01.

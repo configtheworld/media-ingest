@@ -71,7 +71,7 @@ func TestExt(t *testing.T) {
 
 func TestPresetsRender(t *testing.T) {
 	movie := Vars{"title": "The Clockwork Garden", "year": 2015, "id": "900001"}
-	tv := Vars{"show": "Northwind", "year": 2017, "id": "900200", "season": 1, "episode": 3, "episode_title": "Old Tides"}
+	tv := Vars{"show": "Tidewick", "year": 2017, "id": "900200", "season": 1, "episode": 3, "episode_title": "Old Tides"}
 	tests := []struct {
 		preset, kind string
 		vars         Vars
@@ -80,8 +80,8 @@ func TestPresetsRender(t *testing.T) {
 		{"jellyfin", "movie", movie, "The Clockwork Garden (2015) [tmdbid-900001]/The Clockwork Garden (2015) [tmdbid-900001]"},
 		{"plex", "movie", movie, "The Clockwork Garden (2015) {tmdb-900001}/The Clockwork Garden (2015) {tmdb-900001}"},
 		{"emby", "movie", movie, "The Clockwork Garden (2015) [tmdbid=900001]/The Clockwork Garden (2015)"},
-		{"jellyfin", "tv", tv, "Northwind (2017) [tmdbid-900200]/Season 01/Northwind - S01E03 - Old Tides"},
-		{"plex", "tv", tv, "Northwind (2017) {tmdb-900200}/Season 01/Northwind (2017) - s01e03 - Old Tides"},
+		{"jellyfin", "tv", tv, "Tidewick (2017) [tmdbid-900200]/Season 01/Tidewick - S01E03 - Old Tides"},
+		{"plex", "tv", tv, "Tidewick (2017) {tmdb-900200}/Season 01/Tidewick (2017) - s01e03 - Old Tides"},
 	}
 	for _, tt := range tests {
 		p := Presets[tt.preset]

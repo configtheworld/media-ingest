@@ -11,7 +11,7 @@ import (
 	"github.com/configtheworld/media-digest/internal/ingest"
 )
 
-const show = "tv/Harbor Lights (2019) [tmdbid-900100]"
+const show = "tv/Quillmoor Bay (2019) [tmdbid-900100]"
 
 func tvReq(items ...map[string]any) map[string]any {
 	return map[string]any{"provider": "tmdb", "id": "900100", "language": "en-US", "folder": map[string]any{"mode": "auto"}, "items": items}
@@ -55,10 +55,10 @@ func TestTVPlanNaming(t *testing.T) {
 		t.Fatalf("plan: %d", code)
 	}
 	want := map[string]string{
-		"a": show + "/Season 01/Harbor Lights - S01E01 - Arrival.mkv",
-		"s": show + "/Season 01/Harbor Lights - S01E01 - Arrival.en.srt",
-		"b": show + "/Season 01/Harbor Lights - S01E03-E04 - Undertow & Low Tide.mkv",
-		"c": show + "/Season 00/Harbor Lights - S00E01 - Behind the Harbor.mp4",
+		"a": show + "/Season 01/Quillmoor Bay - S01E01 - Arrival.mkv",
+		"s": show + "/Season 01/Quillmoor Bay - S01E01 - Arrival.en.srt",
+		"b": show + "/Season 01/Quillmoor Bay - S01E03-E04 - Undertow & Low Tide.mkv",
+		"c": show + "/Season 00/Quillmoor Bay - S00E01 - Behind the Bay.mp4",
 	}
 	got := paths(plan)
 	for k, w := range want {
@@ -82,9 +82,9 @@ func TestTVAlternateVersionsRequired(t *testing.T) {
 	e.json("POST", "/api/plan/tv", tvReq(ep("a", "a.mkv", 1, 2, "version", "1080p"), ep("b", "b.mkv", 1, 2, "version", "2160p"),
 		ep("s", "b.de.srt", 1, 2, "version", "2160p", "lang", "de")), &plan)
 	got := paths(plan)
-	if got["a"] != show+"/Season 01/Harbor Lights - S01E02 - Fog - 1080p.mkv" ||
-		got["b"] != show+"/Season 01/Harbor Lights - S01E02 - Fog - 2160p.mkv" ||
-		got["s"] != show+"/Season 01/Harbor Lights - S01E02 - Fog - 2160p.de.srt" {
+	if got["a"] != show+"/Season 01/Quillmoor Bay - S01E02 - Fog - 1080p.mkv" ||
+		got["b"] != show+"/Season 01/Quillmoor Bay - S01E02 - Fog - 2160p.mkv" ||
+		got["s"] != show+"/Season 01/Quillmoor Bay - S01E02 - Fog - 2160p.de.srt" {
 		t.Fatalf("%v", got)
 	}
 }
@@ -117,10 +117,10 @@ func TestTVValidation(t *testing.T) {
 
 func TestTVLibraryAwarenessAndReplace(t *testing.T) {
 	e := newEnv(t, config.AuthProxy)
-	old := show + "/Season 01/Harbor.Lights.S01E02.720p.mkv"
+	old := show + "/Season 01/Quillmoor.Bay.S01E02.720p.mkv"
 	os.MkdirAll(filepath.Join(e.media, filepath.Dir(old)), 0o755)
 	os.WriteFile(filepath.Join(e.media, old), []byte("old"), 0o644)
-	os.WriteFile(filepath.Join(e.media, show, "Season 01", "Harbor.Lights.S01E05E06.mkv"), []byte("x"), 0o644)
+	os.WriteFile(filepath.Join(e.media, show, "Season 01", "Quillmoor.Bay.S01E05E06.mkv"), []byte("x"), 0o644)
 
 	var lib ingest.LibraryView
 	if code := e.json("GET", "/api/library/tmdb/tv/900100?lang=en-US", nil, &lib); code != 200 {
@@ -142,7 +142,7 @@ func TestTVLibraryAwarenessAndReplace(t *testing.T) {
 		t.Fatalf("existing episode not detected: %+v", plan.Items[0])
 	}
 	// A subtitle for an episode that exists only in the library follows that file's name.
-	if got := paths(plan)["s"]; got != show+"/Season 01/Harbor.Lights.S01E05E06.en.srt" {
+	if got := paths(plan)["s"]; got != show+"/Season 01/Quillmoor.Bay.S01E05E06.en.srt" {
 		t.Fatalf("subtitle path %q", got)
 	}
 	var apiErr apiError
@@ -163,7 +163,7 @@ func TestTVLibraryAwarenessAndReplace(t *testing.T) {
 	if got.Status != "done" {
 		t.Fatalf("%+v", got)
 	}
-	newPath := show + "/Season 01/Harbor Lights - S01E02 - Fog.mkv"
+	newPath := show + "/Season 01/Quillmoor Bay - S01E02 - Fog.mkv"
 	if b, _ := os.ReadFile(filepath.Join(e.media, newPath)); string(b) != "new!" {
 		t.Fatalf("new file %q", b)
 	}
@@ -186,7 +186,7 @@ func TestTVLibraryAwarenessAndReplace(t *testing.T) {
 
 func TestTVKeepBothWithExistingEpisode(t *testing.T) {
 	e := newEnv(t, config.AuthProxy)
-	target := show + "/Season 01/Harbor Lights - S01E01 - Arrival.mkv"
+	target := show + "/Season 01/Quillmoor Bay - S01E01 - Arrival.mkv"
 	os.MkdirAll(filepath.Join(e.media, filepath.Dir(target)), 0o755)
 	os.WriteFile(filepath.Join(e.media, target), []byte("old"), 0o644)
 	req := tvReq(ep("a", "a.mkv", 1, 1, "policy", "keep_both"))
@@ -195,7 +195,7 @@ func TestTVKeepBothWithExistingEpisode(t *testing.T) {
 	e.upload(batch.ID, batch.Items[0].ID, []byte("new!"))
 	var got ingest.BatchView
 	e.json("GET", "/api/batches/"+batch.ID, nil, &got)
-	if p := got.Items[0].FinalPath; p != show+"/Season 01/Harbor Lights - S01E01 - Arrival - Version 2.mkv" {
+	if p := got.Items[0].FinalPath; p != show+"/Season 01/Quillmoor Bay - S01E01 - Arrival - Version 2.mkv" {
 		t.Fatalf("%q", p)
 	}
 	if b, _ := os.ReadFile(filepath.Join(e.media, target)); string(b) != "old" {
@@ -205,10 +205,10 @@ func TestTVKeepBothWithExistingEpisode(t *testing.T) {
 
 func TestTVFolderReuse(t *testing.T) {
 	e := newEnv(t, config.AuthProxy)
-	os.MkdirAll(filepath.Join(e.media, "tv", "Harbor Lights {tmdb-900100}", "Season 1"), 0o755)
+	os.MkdirAll(filepath.Join(e.media, "tv", "Quillmoor Bay {tmdb-900100}", "Season 1"), 0o755)
 	var plan ingest.Plan
 	e.json("POST", "/api/plan/tv", tvReq(ep("a", "a.mkv", 2, 1)), &plan)
-	if plan.FolderSource != "existing-id" || paths(plan)["a"] != "tv/Harbor Lights {tmdb-900100}/Season 02/Harbor Lights - S02E01 - Return.mkv" {
+	if plan.FolderSource != "existing-id" || paths(plan)["a"] != "tv/Quillmoor Bay {tmdb-900100}/Season 02/Quillmoor Bay - S02E01 - Return.mkv" {
 		t.Fatalf("%+v", plan)
 	}
 }

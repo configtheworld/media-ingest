@@ -55,17 +55,17 @@ test('accessibility: no serious WCAG 2.1 AA violations on the main screens', asy
   await expectAccessible(page, 'search');
 
   await page.getByRole('radio', { name: 'TV show' }).check();
-  await page.getByRole('searchbox').fill('Harbor');
+  await page.getByRole('searchbox').fill('Quillmoor');
   await page.getByRole('button', { name: 'Search' }).click();
-  await page.getByRole('button', { name: /Harbor Lights \(2019\)/ }).click();
+  await page.getByRole('button', { name: /Quillmoor Bay \(2019\)/ }).click();
   await expect(page.getByRole('heading', { name: 'Which seasons?' })).toBeVisible();
   await expectAccessible(page, 'seasons');
 
   await page.getByRole('checkbox', { name: /^Season 1/ }).check();
   await page.getByRole('button', { name: 'Next', exact: true }).click();
   await page.locator('input[type=file]').first().setInputFiles([
-    { name: 'Harbor.Lights.S01E01.mkv', mimeType: 'video/x-matroska', buffer: Buffer.alloc(10) },
-    { name: 'Harbor.Lights.S01E02.en.srt', mimeType: 'text/plain', buffer: Buffer.from('x') },
+    { name: 'Quillmoor.Bay.S01E01.mkv', mimeType: 'video/x-matroska', buffer: Buffer.alloc(10) },
+    { name: 'Quillmoor.Bay.S01E02.en.srt', mimeType: 'text/plain', buffer: Buffer.from('x') },
   ]);
   await expectAccessible(page, 'files');
   await page.getByRole('button', { name: 'Next', exact: true }).click();
@@ -74,7 +74,7 @@ test('accessibility: no serious WCAG 2.1 AA violations on the main screens', asy
 
   await page.getByRole('button', { name: 'Next', exact: true }).click();
   await expect(page.getByRole('heading', { name: 'Review' })).toBeVisible();
-  await expect(page.getByText(/tv\/Harbor Lights/).first()).toBeVisible();
+  await expect(page.getByText(/tv\/Quillmoor Bay/).first()).toBeVisible();
   await expectAccessible(page, 'review');
 
   await page.getByRole('button', { name: 'History' }).click();

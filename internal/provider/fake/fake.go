@@ -23,12 +23,12 @@ func New() *Provider {
 		"200":    {ID: "200", Title: "Untitled", Year: 0},
 	},
 		Shows: map[string]*provider.ShowDetails{
-			"900100": {ID: "900100", Title: "Harbor Lights", Year: 2019, Seasons: []provider.SeasonSummary{
+			"900100": {ID: "900100", Title: "Quillmoor Bay", Year: 2019, Seasons: []provider.SeasonSummary{
 				{Number: 0, Name: "Specials", EpisodeCount: 2}, {Number: 1, Name: "Season 1", EpisodeCount: 6}, {Number: 2, Name: "Season 2", EpisodeCount: 4}}},
 		},
 		Seasons: map[string]map[int]*provider.SeasonDetails{
 			"900100": {
-				0: {Number: 0, Name: "Specials", Episodes: eps("Behind the Harbor", "Lost Tapes")},
+				0: {Number: 0, Name: "Specials", Episodes: eps("Behind the Bay", "Lost Tapes")},
 				1: {Number: 1, Name: "Season 1", Episodes: eps("Arrival", "Fog", "Undertow", "Low Tide", "Beacon", "Homecoming")},
 				2: {Number: 2, Name: "Season 2", Episodes: eps("Return", "Drift", "Storm", "Dawn")},
 			},
