@@ -115,12 +115,12 @@ func load(getenv func(string) string) (*Config, error) {
 	if err != nil {
 		errs = append(errs, fmt.Errorf("FILE_MODE: %w", err))
 	}
-	c.FileMode = os.FileMode(fm)
+	c.FileMode = os.FileMode(fm) //nolint:gosec // octal() bounds it to 0o777
 	dm, err := octal(env("DIR_MODE", "0755"), 0o7777)
 	if err != nil {
 		errs = append(errs, fmt.Errorf("DIR_MODE: %w", err))
 	}
-	c.DirMode = os.FileMode(dm)
+	c.DirMode = os.FileMode(dm) //nolint:gosec // octal() bounds it to 0o7777
 	if c.DirMode&0o700 != 0o700 {
 		errs = append(errs, errors.New("DIR_MODE must give the owner rwx"))
 	}
@@ -311,7 +311,7 @@ func validHeaderName(s string) bool {
 		return false
 	}
 	for _, r := range s {
-		if !(r == '-' || r >= '0' && r <= '9' || r >= 'a' && r <= 'z' || r >= 'A' && r <= 'Z') {
+		if r != '-' && (r < '0' || r > '9') && (r < 'a' || r > 'z') && (r < 'A' || r > 'Z') {
 			return false
 		}
 	}
@@ -320,7 +320,7 @@ func validHeaderName(s string) bool {
 
 func isAlnum(s string) bool {
 	for _, r := range s {
-		if !(r >= '0' && r <= '9' || r >= 'a' && r <= 'z') {
+		if (r < '0' || r > '9') && (r < 'a' || r > 'z') {
 			return false
 		}
 	}

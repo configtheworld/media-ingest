@@ -16,13 +16,13 @@ import (
 	"testing"
 	"testing/fstest"
 
-	"github.com/media-ingest/media-ingest/internal/auth"
-	"github.com/media-ingest/media-ingest/internal/config"
-	"github.com/media-ingest/media-ingest/internal/ingest"
-	"github.com/media-ingest/media-ingest/internal/mediafs"
-	"github.com/media-ingest/media-ingest/internal/provider"
-	"github.com/media-ingest/media-ingest/internal/provider/fake"
-	"github.com/media-ingest/media-ingest/internal/store"
+	"github.com/configtheworld/media-digest/internal/auth"
+	"github.com/configtheworld/media-digest/internal/config"
+	"github.com/configtheworld/media-digest/internal/ingest"
+	"github.com/configtheworld/media-digest/internal/mediafs"
+	"github.com/configtheworld/media-digest/internal/provider"
+	"github.com/configtheworld/media-digest/internal/provider/fake"
+	"github.com/configtheworld/media-digest/internal/store"
 )
 
 const proxyIP = "192.0.2.10"
@@ -38,6 +38,7 @@ type env struct {
 	keys  *KeyStore
 	fake  *fake.Provider
 	svc   *ingest.Service
+	opts  Options
 }
 
 func newEnv(t *testing.T, mode string, mutate ...func(*config.Config)) *env {
@@ -70,14 +71,16 @@ func newEnv(t *testing.T, mode string, mutate ...func(*config.Config)) *env {
 	providers := map[string]provider.Provider{"tmdb": fp}
 	keys, _ := LoadKeyStore("envkey", data, log)
 	svc := ingest.New(cfg, mfs, st, providers, log)
-	srv, err := New(Options{Config: cfg, Log: log, Store: st, Ingest: svc, Providers: providers, Keys: keys,
-		Static: fstest.MapFS{"index.html": {Data: []byte("<!doctype html>")}}, Version: "test",
-		NewTMDB: func(string) provider.Provider { return fp }})
+	opts := Options{Config: cfg, Log: log, Store: st, Ingest: svc, Providers: providers, Keys: keys,
+		Static: fstest.MapFS{"index.html": {Data: []byte("<!doctype html>")},
+			"manifest.webmanifest": {Data: []byte("{}")}, "icons/icon.svg": {Data: []byte("<svg/>")}}, Version: "test",
+		NewTMDB: func(string) provider.Provider { return fp }}
+	srv, err := New(opts)
 	if err != nil {
 		t.Fatal(err)
 	}
 	t.Cleanup(svc.WaitHooks)
-	return &env{t: t, h: srv.Handler(), cfg: cfg, media: media, data: data, csrf: strings.Repeat("ab", 32), user: "alice", keys: keys, fake: fp, svc: svc}
+	return &env{t: t, h: srv.Handler(), cfg: cfg, media: media, data: data, csrf: strings.Repeat("ab", 32), user: "alice", keys: keys, fake: fp, svc: svc, opts: opts}
 }
 
 func (e *env) req(method, url string, body io.Reader, hdr map[string]string) *httptest.ResponseRecorder {
@@ -133,6 +136,12 @@ func TestProxyAuthFailsClosed(t *testing.T) {
 	e.h.ServeHTTP(w, r)
 	if w.Code != 401 {
 		t.Fatalf("untrusted peer: %d", w.Code)
+	}
+	// The web app manifest and icons are public (browsers fetch them without cookies).
+	for _, p := range []string{"/manifest.webmanifest", "/icons/icon.svg"} {
+		if w := e.req("GET", p, nil, map[string]string{"Remote-User": ""}); w.Code != 200 {
+			t.Fatalf("%s without user: %d", p, w.Code)
+		}
 	}
 	// Healthz is public.
 	r = httptest.NewRequest("GET", "/healthz", nil)

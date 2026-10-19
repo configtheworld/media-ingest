@@ -74,6 +74,6 @@ func VerifyPassword(hash, password string) bool {
 	if err != nil {
 		return false
 	}
-	key := argon2.IDKey([]byte(password), h.salt, h.t, h.m, h.p, uint32(len(h.key)))
+	key := argon2.IDKey([]byte(password), h.salt, h.t, h.m, h.p, uint32(len(h.key))) //nolint:gosec // 16..64, checked in parsePHC
 	return subtle.ConstantTimeCompare(key, h.key) == 1
 }

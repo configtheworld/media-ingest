@@ -20,20 +20,20 @@ import (
 
 	"golang.org/x/term"
 
-	"github.com/media-ingest/media-ingest/internal/auth"
-	"github.com/media-ingest/media-ingest/internal/config"
-	"github.com/media-ingest/media-ingest/internal/ingest"
-	"github.com/media-ingest/media-ingest/internal/mediafs"
-	"github.com/media-ingest/media-ingest/internal/parser"
-	"github.com/media-ingest/media-ingest/internal/provider"
-	"github.com/media-ingest/media-ingest/internal/provider/tmdb"
-	"github.com/media-ingest/media-ingest/internal/server"
-	"github.com/media-ingest/media-ingest/internal/store"
-	"github.com/media-ingest/media-ingest/web"
+	"github.com/configtheworld/media-digest/internal/auth"
+	"github.com/configtheworld/media-digest/internal/config"
+	"github.com/configtheworld/media-digest/internal/ingest"
+	"github.com/configtheworld/media-digest/internal/mediafs"
+	"github.com/configtheworld/media-digest/internal/parser"
+	"github.com/configtheworld/media-digest/internal/provider"
+	"github.com/configtheworld/media-digest/internal/provider/tmdb"
+	"github.com/configtheworld/media-digest/internal/server"
+	"github.com/configtheworld/media-digest/internal/store"
+	"github.com/configtheworld/media-digest/web"
 )
 
 // Version is set at build time with -ldflags "-X main.Version=...".
-var Version = "0.3.0"
+var Version = "0.4.0"
 
 func main() {
 	if len(os.Args) > 1 {
@@ -140,7 +140,7 @@ func healthcheck() int {
 		return 1
 	}
 	c := &http.Client{Timeout: 3 * time.Second}
-	resp, err := c.Get("http://127.0.0.1:" + port + "/healthz")
+	resp, err := c.Get("http://127.0.0.1:" + port + "/healthz") //nolint:gosec // loopback, port from our own LISTEN_ADDR
 	if err != nil {
 		fmt.Fprintln(os.Stderr, err)
 		return 1

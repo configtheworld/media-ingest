@@ -10,8 +10,8 @@ import (
 	"strings"
 	"time"
 
-	"github.com/media-ingest/media-ingest/internal/mediafs"
-	"github.com/media-ingest/media-ingest/internal/store"
+	"github.com/configtheworld/media-digest/internal/mediafs"
+	"github.com/configtheworld/media-digest/internal/store"
 )
 
 // Conflict policies accepted from the client.

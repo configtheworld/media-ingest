@@ -10,9 +10,9 @@ import (
 	"strings"
 	"unicode/utf8"
 
-	"github.com/media-ingest/media-ingest/internal/config"
-	"github.com/media-ingest/media-ingest/internal/mediafs"
-	"github.com/media-ingest/media-ingest/internal/naming"
+	"github.com/configtheworld/media-digest/internal/config"
+	"github.com/configtheworld/media-digest/internal/mediafs"
+	"github.com/configtheworld/media-digest/internal/naming"
 )
 
 // Item roles.

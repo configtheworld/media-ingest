@@ -6,6 +6,7 @@
   --border: #d1d9e0;
   --accent: #1f6feb;
   --accent-text: #ffffff;
+  --link: #0550ae; /* >= 4.5:1 on --bg and --surface */
   --danger: #cf222e;
   --warn-bg: #fff8c5;
   --warn-border: #d4a72c;
@@ -25,6 +26,7 @@
     --border: #30363d;
     --accent: #4493f8;
     --accent-text: #0d1117;
+    --link: #58a6ff;
     --danger: #f85149;
     --warn-bg: #2b2111;
     --warn-border: #9e6a03;
@@ -50,7 +52,7 @@ body {
   flex-direction: column;
 }
 
-a { color: var(--accent); }
+a { color: var(--link); }
 
 :focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
 
@@ -211,7 +213,7 @@ details.ignored { margin: 8px 0; color: var(--muted); font-size: 14px; }
 .dirlist { list-style: none; padding: 0; margin: 8px 0; display: grid; gap: 4px; max-height: 50vh; overflow: auto; }
 .dirlist .dir { width: 100%; text-align: left; background: var(--surface); }
 .dest { margin: 12px 0; }
-button.linkish { background: none; border: 0; padding: 0; min-height: auto; color: var(--accent); text-decoration: underline; cursor: pointer; font: inherit; }
+button.linkish { background: none; border: 0; padding: 0; min-height: auto; color: var(--link); text-decoration: underline; cursor: pointer; font: inherit; }
 textarea { font: 13px/1.4 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; color: inherit; background: var(--surface);
   border: 1px solid var(--border); border-radius: 8px; padding: 8px; width: 100%; }
 .view h3 { margin: 20px 0 4px; font-size: 1.05rem; }
@@ -229,3 +231,4 @@ textarea { font: 13px/1.4 ui-monospace, SFMono-Regular, Menlo, Consolas, monospa
   .header-actions { width: 100%; justify-content: space-between; gap: 0; }
   .header-actions button { padding: 4px 6px; min-height: 40px; font-size: 15px; }
 }
+.langswitch select { width: auto; min-height: 36px; padding: 4px 8px; font-size: 14px; }

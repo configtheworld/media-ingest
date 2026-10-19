@@ -6,7 +6,7 @@ import (
 	"io"
 	"strings"
 
-	"github.com/media-ingest/media-ingest/internal/provider"
+	"github.com/configtheworld/media-digest/internal/provider"
 )
 
 type Provider struct {

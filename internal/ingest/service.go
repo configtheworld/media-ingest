@@ -5,22 +5,22 @@ import (
 	"context"
 	"encoding/json"
 	"errors"
-	"fmt"
 	"io/fs"
 	"log/slog"
 	"regexp"
+	"strconv"
 	"strings"
 	"sync"
 	"unicode"
 
 	"golang.org/x/text/unicode/norm"
 
-	"github.com/media-ingest/media-ingest/internal/config"
-	"github.com/media-ingest/media-ingest/internal/jellyfin"
-	"github.com/media-ingest/media-ingest/internal/mediafs"
-	"github.com/media-ingest/media-ingest/internal/naming"
-	"github.com/media-ingest/media-ingest/internal/provider"
-	"github.com/media-ingest/media-ingest/internal/store"
+	"github.com/configtheworld/media-digest/internal/config"
+	"github.com/configtheworld/media-digest/internal/jellyfin"
+	"github.com/configtheworld/media-digest/internal/mediafs"
+	"github.com/configtheworld/media-digest/internal/naming"
+	"github.com/configtheworld/media-digest/internal/provider"
+	"github.com/configtheworld/media-digest/internal/store"
 )
 
 // Service is the ingest engine shared by the HTTP handlers.
@@ -182,7 +182,7 @@ func folderTitle(name string) (string, int) {
 	name = tagRe.ReplaceAllString(name, " ")
 	year := 0
 	if m := yearRe.FindStringSubmatchIndex(name); m != nil {
-		fmt.Sscanf(name[m[2]:m[3]], "%d", &year)
+		year, _ = strconv.Atoi(name[m[2]:m[3]]) // the regexp guarantees 4 digits
 		name = name[:m[0]] + name[m[1]:]
 	}
 	return normTitle(name), year

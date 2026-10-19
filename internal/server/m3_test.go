@@ -12,8 +12,8 @@ import (
 	"testing"
 	"time"
 
-	"github.com/media-ingest/media-ingest/internal/config"
-	"github.com/media-ingest/media-ingest/internal/ingest"
+	"github.com/configtheworld/media-digest/internal/config"
+	"github.com/configtheworld/media-digest/internal/ingest"
 )
 
 // fakeJellyfin records Library/Media/Updated calls.

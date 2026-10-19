@@ -1,5 +1,7 @@
 {
   "app.name": "media-ingest",
+  "app.skip": "Skip to content",
+  "ui.language": "Interface language",
   "nav.settings": "Settings",
   "nav.logout": "Sign out",
   "nav.signedInAs": "Signed in as {user}",

@@ -1,6 +1,8 @@
-module github.com/media-ingest/media-ingest
+module github.com/configtheworld/media-digest
 
 go 1.26.0
+
+toolchain go1.26.9
 
 require (
 	go.yaml.in/yaml/v3 v3.0.5

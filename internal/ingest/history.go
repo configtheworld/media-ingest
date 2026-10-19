@@ -11,9 +11,9 @@ import (
 	"strings"
 	"time"
 
-	"github.com/media-ingest/media-ingest/internal/jellyfin"
-	"github.com/media-ingest/media-ingest/internal/parser"
-	"github.com/media-ingest/media-ingest/internal/store"
+	"github.com/configtheworld/media-digest/internal/jellyfin"
+	"github.com/configtheworld/media-digest/internal/parser"
+	"github.com/configtheworld/media-digest/internal/store"
 )
 
 // --- parser settings ---

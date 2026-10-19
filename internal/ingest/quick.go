@@ -8,8 +8,8 @@ import (
 	"sort"
 	"strings"
 
-	"github.com/media-ingest/media-ingest/internal/mediafs"
-	"github.com/media-ingest/media-ingest/internal/naming"
+	"github.com/configtheworld/media-digest/internal/mediafs"
+	"github.com/configtheworld/media-digest/internal/naming"
 )
 
 // Quick upload: no metadata. Files keep their names (sanitized) and go into

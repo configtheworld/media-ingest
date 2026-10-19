@@ -15,8 +15,10 @@ export default defineConfig({
     trace: 'retain-on-failure',
   },
   projects: [
-    { name: 'mobile', use: { ...devices['Pixel 7'] }, grepInvert: /@desktop/ },
-    { name: 'desktop', use: { ...devices['Desktop Chrome'] }, grep: /@desktop/ },
+    { name: 'mobile', use: { ...devices['Pixel 7'] }, grepInvert: /@desktop|@docs/ },
+    { name: 'desktop', use: { ...devices['Desktop Chrome'] }, grep: /@desktop/, grepInvert: /@docs/ },
+    // `make screenshots` only: renders docs/screenshots/*.png from the fake data.
+    { name: 'docs', use: { ...devices['Desktop Chrome'] }, grep: /@docs/ },
   ],
   webServer: [
     {

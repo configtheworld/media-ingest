@@ -19,11 +19,11 @@ import (
 
 	"golang.org/x/time/rate"
 
-	"github.com/media-ingest/media-ingest/internal/auth"
-	"github.com/media-ingest/media-ingest/internal/config"
-	"github.com/media-ingest/media-ingest/internal/ingest"
-	"github.com/media-ingest/media-ingest/internal/provider"
-	"github.com/media-ingest/media-ingest/internal/store"
+	"github.com/configtheworld/media-digest/internal/auth"
+	"github.com/configtheworld/media-digest/internal/config"
+	"github.com/configtheworld/media-digest/internal/ingest"
+	"github.com/configtheworld/media-digest/internal/provider"
+	"github.com/configtheworld/media-digest/internal/store"
 )
 
 type Server struct {
@@ -123,6 +123,10 @@ func (s *Server) Handler() http.Handler {
 		static = s.authed(func(w http.ResponseWriter, r *http.Request, _ auth.Identity) { s.static.ServeHTTP(w, r) })
 	}
 	mux.Handle("/", s.rateLimit(s.apiLimit, static))
+	// Browsers fetch the web app manifest and its icons without cookies, so
+	// these (static, non-sensitive) files are public in every auth mode.
+	mux.Handle("GET /manifest.webmanifest", s.rateLimit(s.apiLimit, s.static))
+	mux.Handle("GET /icons/", s.rateLimit(s.apiLimit, s.static))
 
 	return s.logRequests(securityHeaders(mux))
 }
@@ -281,5 +285,5 @@ func (st *staticFiles) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	if r.Method == http.MethodHead {
 		return
 	}
-	_, _ = w.Write(b)
+	_, _ = w.Write(b) //nolint:gosec // embedded static file, not user content
 }

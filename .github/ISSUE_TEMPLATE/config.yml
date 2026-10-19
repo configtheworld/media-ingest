@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Report a security vulnerability
+    url: https://github.com/configtheworld/media-digest/security/advisories/new
+    about: Please report security issues privately.
+  - name: Documentation
+    url: https://github.com/configtheworld/media-digest/tree/main/docs
+    about: Configuration, deployment, reverse proxies and troubleshooting.

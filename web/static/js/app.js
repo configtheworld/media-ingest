@@ -1,5 +1,5 @@
 import { h, clear, fmtBytes, uid, announce } from './dom.js';
-import { loadI18n, t, errText } from './i18n.js';
+import { loadI18n, t, errText, UI_LANGUAGES, currentLanguage, setUILanguage } from './i18n.js';
 import { get, post, put, setCsrf, ApiError } from './api.js';
 import { filterFiles, filesFromDataTransfer, fromInput, fingerprint, extOf } from './files.js';
 import { suggestMovieRoles, validateMovieMapping } from './movie.js';
@@ -16,6 +16,7 @@ let queue; // upload queue, created at boot
 // ---------- boot ----------
 
 async function boot() {
+  if ('serviceWorker' in navigator) navigator.serviceWorker.register('/sw.js').catch(() => { /* not a secure context */ });
   await loadI18n();
   document.title = t('app.name');
   queue = new Queue({ parallel: 3, onChange: scheduleUploadRender });
@@ -90,8 +91,14 @@ function renderChrome() {
     h('div', { class: 'header-actions' },
       S.session ? h('span', { class: 'user', 'aria-label': t('nav.signedInAs', { user: S.session.user }) }, S.session.user) : null,
       actions));
+  const skip = document.querySelector('.skip');
+  if (skip) skip.textContent = t('app.skip');
+  const langSel = h('select', { id: 'uilang', onchange: (e) => setUILanguage(e.target.value) },
+    Object.entries(UI_LANGUAGES).map(([code, name]) => h('option', { value: code, selected: code === currentLanguage() }, name)));
   const footer = document.getElementById('footer');
-  clear(footer, (S.session?.providers || []).map((p) =>
+  clear(footer,
+    h('p', { class: 'langswitch' }, h('label', { for: 'uilang' }, t('ui.language')), ' ', langSel),
+    (S.session?.providers || []).map((p) =>
     h('p', { class: 'attribution' }, p.attribution.text, ' ', h('a', { href: p.attribution.url, rel: 'noopener noreferrer', target: '_blank' }, p.name.toUpperCase()))),
   S.session ? h('p', { class: 'version' }, `media-ingest ${S.session.version}`) : null);
 }

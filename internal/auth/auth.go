@@ -17,8 +17,8 @@ import (
 	"time"
 	"unicode"
 
-	"github.com/media-ingest/media-ingest/internal/config"
-	"github.com/media-ingest/media-ingest/internal/store"
+	"github.com/configtheworld/media-digest/internal/config"
+	"github.com/configtheworld/media-digest/internal/store"
 )
 
 const (
@@ -188,6 +188,7 @@ func (a *Auth) SessionCookie(value string, expires time.Time) *http.Cookie {
 	if value == "" {
 		maxAge = -1
 	}
+	//nolint:gosec // HttpOnly+Lax; Secure unless COOKIE_SECURE=false (plain-HTTP testing only)
 	return &http.Cookie{Name: SessionCookie, Value: value, Path: "/", MaxAge: maxAge,
 		HttpOnly: true, Secure: a.cfg.CookieSecure, SameSite: http.SameSiteLaxMode}
 }
@@ -202,6 +203,8 @@ func (a *Auth) EnsureCSRFCookie(w http.ResponseWriter, r *http.Request) string {
 		panic(err)
 	}
 	tok := hex.EncodeToString(b[:])
+	// Not HttpOnly by design: the double-submit check needs JavaScript to read it.
+	//nolint:gosec // SameSite=Strict; Secure unless COOKIE_SECURE=false
 	http.SetCookie(w, &http.Cookie{Name: CSRFCookie, Value: tok, Path: "/", HttpOnly: false,
 		Secure: a.cfg.CookieSecure, SameSite: http.SameSiteStrictMode, MaxAge: 30 * 24 * 3600})
 	return tok

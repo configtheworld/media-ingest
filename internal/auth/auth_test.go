@@ -6,7 +6,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/media-ingest/media-ingest/internal/config"
+	"github.com/configtheworld/media-digest/internal/config"
 )
 
 func TestPasswordHash(t *testing.T) {

@@ -50,7 +50,7 @@ func ParseYAML(b []byte) (name, description string, r Rules, err error) {
 	if len(pf.Episode) == 0 && len(pf.Season) == 0 && len(pf.Junk) == 0 {
 		return "", "", r, errors.New("no rules")
 	}
-	if err := pf.Rules.validatePartial(); err != nil {
+	if err := pf.validatePartial(); err != nil {
 		return "", "", r, err
 	}
 	return pf.Name, pf.Description, pf.Rules, nil
@@ -97,7 +97,7 @@ func LoadPacks(userDir string) ([]Pack, error) {
 				errs = append(errs, fmt.Errorf("%s: invalid pack name (use a-z, 0-9, - and _)", f.Name()))
 				continue
 			}
-			b, err := os.ReadFile(filepath.Join(userDir, f.Name()))
+			b, err := os.ReadFile(filepath.Join(userDir, f.Name())) //nolint:gosec // name from ReadDir, checked by packIDRe
 			if err == nil {
 				var name, desc string
 				var r Rules

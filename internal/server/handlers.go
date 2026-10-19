@@ -10,11 +10,11 @@ import (
 	"time"
 	"unicode/utf8"
 
-	"github.com/media-ingest/media-ingest/internal/auth"
-	"github.com/media-ingest/media-ingest/internal/config"
-	"github.com/media-ingest/media-ingest/internal/ingest"
-	"github.com/media-ingest/media-ingest/internal/naming"
-	"github.com/media-ingest/media-ingest/internal/provider"
+	"github.com/configtheworld/media-digest/internal/auth"
+	"github.com/configtheworld/media-digest/internal/config"
+	"github.com/configtheworld/media-digest/internal/ingest"
+	"github.com/configtheworld/media-digest/internal/naming"
+	"github.com/configtheworld/media-digest/internal/provider"
 )
 
 func (s *Server) healthz(w http.ResponseWriter, r *http.Request) {

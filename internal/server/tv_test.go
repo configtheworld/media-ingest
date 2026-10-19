@@ -7,8 +7,8 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/media-ingest/media-ingest/internal/config"
-	"github.com/media-ingest/media-ingest/internal/ingest"
+	"github.com/configtheworld/media-digest/internal/config"
+	"github.com/configtheworld/media-digest/internal/ingest"
 )
 
 const show = "tv/Harbor Lights (2019) [tmdbid-9001]"

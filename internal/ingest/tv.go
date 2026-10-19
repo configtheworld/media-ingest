@@ -12,9 +12,9 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/media-ingest/media-ingest/internal/config"
-	"github.com/media-ingest/media-ingest/internal/naming"
-	"github.com/media-ingest/media-ingest/internal/provider"
+	"github.com/configtheworld/media-digest/internal/config"
+	"github.com/configtheworld/media-digest/internal/naming"
+	"github.com/configtheworld/media-digest/internal/provider"
 )
 
 // Episode roles.

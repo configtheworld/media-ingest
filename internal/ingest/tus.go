@@ -12,8 +12,8 @@ import (
 	"sync"
 	"time"
 
-	"github.com/media-ingest/media-ingest/internal/naming"
-	"github.com/media-ingest/media-ingest/internal/store"
+	"github.com/configtheworld/media-digest/internal/naming"
+	"github.com/configtheworld/media-digest/internal/store"
 )
 
 // This file implements the tus 1.0.0 resumable upload protocol (core,
@@ -42,7 +42,7 @@ func tusError(w http.ResponseWriter, status int, msg string) {
 	tusHeaders(w)
 	w.Header().Set("Content-Type", "text/plain; charset=utf-8")
 	w.WriteHeader(status)
-	io.WriteString(w, msg+"\n")
+	_, _ = io.WriteString(w, msg+"\n")
 }
 
 // TusOptions answers protocol discovery.

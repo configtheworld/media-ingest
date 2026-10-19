@@ -14,8 +14,8 @@ import (
 	"strings"
 	"time"
 
-	"github.com/media-ingest/media-ingest/internal/cache"
-	"github.com/media-ingest/media-ingest/internal/provider"
+	"github.com/configtheworld/media-digest/internal/cache"
+	"github.com/configtheworld/media-digest/internal/provider"
 )
 
 const (

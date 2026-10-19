@@ -3,6 +3,31 @@
 All notable changes to this project are documented here. The project follows
 [Semantic Versioning](https://semver.org/).
 
+## [Unreleased]
+
+## [0.4.0] - 2026-10-17
+
+### Added
+- Installable web app (PWA): manifest, icons (incl. maskable), service worker that keeps the app shell
+  usable offline and never touches API calls or uploads.
+- UI translations: German, Turkish, Spanish, with a language switcher (follows the browser by default).
+- Documentation: configuration reference, deployment, reverse proxies (Traefik + Authelia, Nginx,
+  Caddy, large uploads), naming, episode rules, troubleshooting, architecture; screenshots.
+- Community files: security policy, contributing guide, code of conduct, issue and PR templates.
+- CI for GitHub Actions and GitLab: gofmt, go vet, golangci-lint (incl. gosec), race-enabled tests,
+  JavaScript unit tests, Playwright end-to-end and accessibility (WCAG 2.1 AA) tests, govulncheck and
+  npm audit, multi-arch image build pushed to GHCR (`edge`, `X.Y.Z`, `X.Y`, `latest`). Dependabot.
+- `Makefile` with the common development tasks.
+
+### Changed
+- Go module path is now `github.com/configtheworld/media-digest`.
+- Go toolchain pinned to 1.26.9 (security fixes since 1.26.0).
+- `JELLYFIN_PATH_PREFIX=/` is accepted (Jellyfin mounting `movies/` and `tv/` at the root).
+- The web app manifest and icons are served without authentication (browsers fetch them without cookies).
+
+### Fixed
+- Link colour contrast below WCAG AA in the footer.
+
 ## [0.3.0] - 2026-10-17
 
 ### Added
@@ -30,3 +55,6 @@ All notable changes to this project are documented here. The project follows
 - Authentication: reverse-proxy header (default, fail closed), built-in login (argon2id) or none.
 - Movie flow: TMDB search, file roles (movie, versions, extras, subtitles), dry-run review,
   resumable tus uploads to a staging folder, atomic publish without overwriting, permissions.
+
+[Unreleased]: https://github.com/configtheworld/media-digest/compare/v0.4.0...HEAD
+[0.4.0]: https://github.com/configtheworld/media-digest/releases/tag/v0.4.0

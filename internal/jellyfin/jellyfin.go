@@ -114,7 +114,7 @@ func (c *Client) post(ctx context.Context, endpoint string, body []byte) error {
 		}
 		return err
 	}
-	io.Copy(io.Discard, io.LimitReader(resp.Body, 64<<10))
+	_, _ = io.Copy(io.Discard, io.LimitReader(resp.Body, 64<<10)) // drain for connection reuse
 	resp.Body.Close()
 	if resp.StatusCode < 200 || resp.StatusCode > 299 {
 		return fmt.Errorf("HTTP %d", resp.StatusCode)

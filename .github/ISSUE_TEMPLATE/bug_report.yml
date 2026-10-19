@@ -1,0 +1,53 @@
+name: Bug report
+description: Something does not work as described
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for reporting! **Security problems:** please use the private
+        [security advisory form](https://github.com/configtheworld/media-digest/security/advisories/new) instead.
+        Remove API keys, passwords, domains and IP addresses you do not want to publish.
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened, and what did you expect?
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      placeholder: |
+        1. Search for …
+        2. Add files named …
+        3. …
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Version
+      description: Shown in the footer of the web UI, or `media-ingest version`.
+      placeholder: "0.4.0"
+    validations:
+      required: true
+  - type: dropdown
+    id: auth
+    attributes:
+      label: AUTH_MODE
+      options: [proxy, basic, none]
+    validations:
+      required: true
+  - type: input
+    id: setup
+    attributes:
+      label: Setup
+      description: Reverse proxy, browser/device, host OS, how you run it (compose, docker run, LXC …)
+      placeholder: Traefik 3 + Authelia, Docker on Debian 12, Firefox on Android
+  - type: textarea
+    id: logs
+    attributes:
+      label: Relevant log lines
+      description: "`docker compose logs media-ingest` (JSON). Remove anything private."
+      render: text

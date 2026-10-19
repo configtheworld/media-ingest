@@ -20,7 +20,7 @@ func (f *FS) FreeBytes(rel string) int64 {
 	if err := unix.Statfs(filepath.Join(f.rootPath, filepath.FromSlash(rel)), &st); err != nil {
 		return -1
 	}
-	return int64(st.Bavail) * int64(st.Bsize)
+	return int64(st.Bavail) * int64(st.Bsize) //nolint:gosec // overflows only beyond 8 EiB free
 }
 
 // SameDevice reports whether two directories are on the same file system.
@@ -42,7 +42,7 @@ func (f *FS) dev(rel string) (uint64, error) {
 		return 0, err
 	}
 	if st, ok := fi.Sys().(*syscall.Stat_t); ok {
-		return uint64(st.Dev), nil //nolint:unconvert // int32 on darwin
+		return uint64(st.Dev), nil //nolint:unconvert,gosec // int32 on darwin; only compared for equality
 	}
 	return 0, os.ErrInvalid
 }

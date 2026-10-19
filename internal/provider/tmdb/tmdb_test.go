@@ -10,7 +10,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/media-ingest/media-ingest/internal/provider"
+	"github.com/configtheworld/media-digest/internal/provider"
 )
 
 func newTest(t *testing.T, key string, h http.HandlerFunc) *Client {

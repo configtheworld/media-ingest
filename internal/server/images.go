@@ -13,7 +13,7 @@ import (
 
 	"golang.org/x/sync/singleflight"
 
-	"github.com/media-ingest/media-ingest/internal/provider"
+	"github.com/configtheworld/media-digest/internal/provider"
 )
 
 const (
@@ -63,7 +63,7 @@ func (c *imageCache) serve(w http.ResponseWriter, r *http.Request, p provider.Pr
 			}
 		}
 	}
-	f, err := os.Open(file)
+	f, err := os.Open(file) //nolint:gosec // built from ValidImage-checked size and ref
 	if err != nil {
 		http.Error(w, "image unavailable", http.StatusBadGateway)
 		return

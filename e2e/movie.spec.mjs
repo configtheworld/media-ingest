@@ -43,7 +43,7 @@ test('movie: search, add files, map, review, upload, publish', async ({ page }) 
   const roles = page.getByLabel('Use as');
   await expect(roles.nth(0)).toHaveValue('movie');
   await expect(roles.nth(1)).toHaveValue('subtitle');
-  await expect(page.getByLabel('Language')).toHaveValue('en');
+  await expect(page.getByLabel('Language', { exact: true })).toHaveValue('en');
   await page.getByRole('button', { name: 'Next' }).click();
 
   await expect(page.getByRole('heading', { name: 'Review' })).toBeVisible();

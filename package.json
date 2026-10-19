@@ -6,9 +6,11 @@
   "scripts": {
     "lint:js": "for f in web/static/js/*.js; do node --check \"$f\" || exit 1; done",
     "test:unit": "node --test 'web/test/*.test.mjs'",
-    "test:e2e": "playwright test"
+    "test:e2e": "playwright test --project=mobile --project=desktop",
+    "screenshots": "playwright test --project=docs"
   },
   "devDependencies": {
+    "@axe-core/playwright": "4.13.0",
     "@playwright/test": "1.63.0"
   }
 }

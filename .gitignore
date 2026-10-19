@@ -12,3 +12,4 @@ node_modules/
 e2e/.tmp/
 test-results/
 playwright-report/
+.dev/
